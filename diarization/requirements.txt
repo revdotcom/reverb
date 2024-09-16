@@ -1,0 +1,2 @@
+pyannote.audio==3.3.1
+intervaltree==3.1.0

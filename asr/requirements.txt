@@ -1,0 +1,5 @@
+torchaudio
+openai-whisper
+typeguard==2.*
+wandb
+pyyaml

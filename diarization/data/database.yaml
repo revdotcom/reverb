@@ -1,0 +1,17 @@
+Databases:
+  audiodb:
+    - /path/to/audio/{uri}.wav
+
+Protocols:
+  audiodb:
+    SpeakerDiarization:
+      train_protocol:
+        scope: file
+        train:
+          uri: /path/to/train/all.uri
+          annotation: /path/to/train/all.rttm
+          annotated: /path/to/train/all.uem
+        development:
+          uri: /path/to/dev/all.uri
+          annotation: /path/to/dev/all.rttm
+          annotated: /path/to/dev/all.uem
