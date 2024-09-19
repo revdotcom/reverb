@@ -8,23 +8,7 @@
 
 ## Getting Started <a name="getting-started"></a>
 
-### Retrieve the model
-The Reginald ASR model v1 is stored on HuggingFace https://huggingface.co/Revai/reginald.
-
-### Install inference requirements
-
-A conda environment with python version 3.10 is recommended:
-```
-conda create -n reginald-env python=3.10
-conda activate reginald-env
-```
-Then, install dependencies:
-```
-pip install -r requirements.txt
-export PYTHONPATH="$(pwd)":$PYTHONPATH
-```
-
-### Example usage
+### Usage
 ```
 python wenet/bin/recognize_wav.py --config model.yaml \
     --checkpoint model.pt \
