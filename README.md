@@ -1,5 +1,5 @@
 ## Reginald
-Open source inference and evaluation code for Rev's Speech models.
+Open source inference and evaluation code for Rev's state-of-the-art speech recognition and diarization models. The speech recognition (ASR) code uses the [WeNet](https://github.com/wenet-e2e/wenet) framework and the speech diarization code uses the [Pyannote](https://github.com/pyannote/pyannote-audio) framework. More information can be found on our [blog](rev.com/blog) and the models can be downloaded from [huggingface](https://huggingface.co/Revai). 
 
 ## Table of Contents
 - [ASR](#asr)
@@ -9,15 +9,14 @@ Open source inference and evaluation code for Rev's Speech models.
 
 
 ### ASR
-Speech-to-text models/code based on the WeNet framework.
+Speech-to-text code based on the WeNet framework. See [the ASR folder](https://github.com/revdotcom/reginald/tree/main/asr) for more details and usage instructions. 
 
 ### Diarization
-Speaker diarization models/code based on the Pyannote framework.
+Speaker diarization code based on the Pyannote framework. See [the diarization folder](https://github.com/revdotcom/reginald/tree/main/diarization) for more details and usage instructions.
 
 ## Installation
-We recommend using virtual environment with a tool such as [anaconda](https://anaconda.org/). You might need to set your 
-`HUGGINGFACE_ACCESS_TOKEN` as well since the model itself (ASR and diarization) is downloaded 
-from HF hub.
+We recommend using a virtual environment with a tool such as [anaconda](https://anaconda.org/). You might need to set your 
+`HUGGINGFACE_ACCESS_TOKEN` as well since the model itself (ASR and diarization) is downloaded from the HF hub.
 
 ```bash
 conda create -n reginald-env python=3.10
@@ -37,7 +36,7 @@ git clone https://huggingface.co/Revai/reginald
 ```
 
 ### Docker Image
-Alternatively, you can use Docker to run `reginald` model without needing to install dependencies
+Alternatively, you can use Docker to run the `reginald` model without needing to install dependencies
 directly on your system. First, make sure Docker is installed on your system. If you wish to run
 on NVIDIA GPU, more steps might be required.
 Then, run the following command to build the Docker image:
