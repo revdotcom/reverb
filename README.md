@@ -36,7 +36,7 @@ git clone https://huggingface.co/Revai/reginald
 ```
 
 ### Docker Image
-Alternatively, you can use Docker to run the `reginald` model without needing to install dependencies
+Alternatively, you can use Docker to run ASR and/or diarization without needing to install dependencies
 directly on your system. First, make sure Docker is installed on your system. If you wish to run
 on NVIDIA GPU, more steps might be required.
 Then, run the following command to build the Docker image:
