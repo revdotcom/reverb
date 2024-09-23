@@ -11,8 +11,22 @@ Open source inference and evaluation code for Rev's state-of-the-art speech reco
 ### ASR
 Speech-to-text code based on the WeNet framework. See [the ASR folder](https://github.com/revdotcom/reginald/tree/main/asr) for more details and usage instructions. 
 
+Long-form speech recognition WER results:
+| Model            | Earnings21 | Earnings22 | Rev16 |
+|------------------|------------|------------|-------|
+| Rev (Verbatim)   |       9.68 |      13.68 | 10.30 |
+| Whisper Large V3 |      14.26 |      19.05 | 10.86 |
+| Canary 1B        |      14.40 |      19.01 | 13.82 |
+
 ### Diarization
 Speaker diarization code based on the Pyannote framework. See [the diarization folder](https://github.com/revdotcom/reginald/tree/main/diarization) for more details and usage instructions.
+
+Long-form WDER results, in combination with Rev's ASR:
+| Model            | Earnings21 |  Rev16 |
+|------------------|------------|-------|
+| Pyannote3.0  |        |      |
+| Rev Fico |      0.47 |   0.77 |
+| Rev Babis      |      0.46 |   0.78 |
 
 ## Installation
 We recommend using a virtual environment with a tool such as [anaconda](https://anaconda.org/). You might need to set your 
