@@ -24,9 +24,9 @@ Speaker diarization code based on the Pyannote framework. See [the diarization f
 Long-form WDER results, in combination with Rev's ASR:
 | Model            | Earnings21 |  Rev16 |
 |------------------|------------|-------|
-| Pyannote3.0  |        |      |
-| Rev Fico |      0.47 |   0.77 |
-| Rev Babis      |      0.46 |   0.78 |
+| Pyannote3.0  |    0.051    |   0.090   |
+| Rev Fico |      0.047 |   0.077 |
+| Rev Babis      |      0.046 |   0.078 |
 
 ## Installation
 We recommend using a virtual environment with a tool such as [anaconda](https://anaconda.org/). You might need to set your 
