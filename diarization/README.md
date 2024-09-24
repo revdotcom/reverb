@@ -8,6 +8,8 @@ compared to the baseline pyannote3.0 model,
 evaluated on over 1,250,000 tokens across five different test suites.
 The larger model - `Babis` - offers **22.25%** relative improvement over pyannote3.0 model.
 
+Both models can be found on HF https://huggingface.co/Revai and are integrated into HF via pyannote.
+
 ## Table of Contents
 - [Usage](#usage)
   - [Assigning words to speakers](#assigning-words-to-speakers)
