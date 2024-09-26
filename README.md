@@ -1,6 +1,6 @@
 ![Rev Logo](resources/logo_purple.png#gh-light-mode-only)
 ![Rev Logo](resources/logo_white.png#gh-dark-mode-only)
-# Reginald
+# Reverb
 Open source inference and evaluation code for Rev's state-of-the-art speech recognition and diarization models. The speech recognition (ASR) code uses the [WeNet](https://github.com/wenet-e2e/wenet) framework and the speech diarization code uses the [Pyannote](https://github.com/pyannote/pyannote-audio) framework. More information can be found on our [blog](rev.com/blog) and the models can be downloaded from [huggingface](https://huggingface.co/Revai). 
 
 ## Table of Contents
@@ -11,7 +11,7 @@ Open source inference and evaluation code for Rev's state-of-the-art speech reco
 
 
 ### ASR
-Speech-to-text code based on the WeNet framework. See [the ASR folder](https://github.com/revdotcom/reginald/tree/main/asr) for more details and usage instructions. 
+Speech-to-text code based on the WeNet framework. See [the ASR folder](https://github.com/revdotcom/reverb/tree/main/asr) for more details and usage instructions. 
 
 Long-form speech recognition WER results:
 | Model            | Earnings21 | Earnings22 | Rev16 |
@@ -21,7 +21,7 @@ Long-form speech recognition WER results:
 | Canary 1B        |      14.40 |      19.01 | 13.82 |
 
 ### Diarization
-Speaker diarization code based on the Pyannote framework. See [the diarization folder](https://github.com/revdotcom/reginald/tree/main/diarization) for more details and usage instructions.
+Speaker diarization code based on the Pyannote framework. See [the diarization folder](https://github.com/revdotcom/reverb/tree/main/diarization) for more details and usage instructions.
 
 Long-form WDER results, in combination with Rev's ASR:
 | Model            | Earnings21 |  Rev16 |
@@ -35,8 +35,8 @@ We recommend using a virtual environment with a tool such as [anaconda](https://
 `HUGGINGFACE_ACCESS_TOKEN` as well since the model itself (ASR and diarization) is downloaded from the HF hub.
 
 ```bash
-conda create -n reginald-env python=3.10
-conda activate reginald-env
+conda create -n reverb-env python=3.10
+conda activate reverb-env
 ```
 
 ```bash
@@ -48,7 +48,7 @@ export PYTHONPATH="$(pwd)"/asr:$PYTHONPATH  # adding this to make wenet/ work
 Make sure that git lfs is correctly installed on your system.
 ```bash
 git lfs install
-git clone https://huggingface.co/Revai/reginald
+git clone https://huggingface.co/Revai/reverb
 ```
 
 ### Docker Image
@@ -57,12 +57,12 @@ directly on your system. First, make sure Docker is installed on your system. If
 on NVIDIA GPU, more steps might be required.
 Then, run the following command to build the Docker image:
 ```bash
-docker build -t reginald . --build-arg HUGGINGFACE_ACCESS_TOKEN=${YOUR_HUGGINGFACE_ACCESS_TOKEN} 
+docker build -t reverb . --build-arg HUGGINGFACE_ACCESS_TOKEN=${YOUR_HUGGINGFACE_ACCESS_TOKEN} 
 ```
 
 And to run docker
 ```bash
-sudo docker run --entrypoint "/bin/bash" --gpus all --rm -it reginald
+sudo docker run --entrypoint "/bin/bash" --gpus all --rm -it reverb
 ```
 
 # License
