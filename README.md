@@ -1,4 +1,5 @@
-## Reginald
+![Rev Logo](resources/logo_purple.png)
+# Reginald
 Open source inference and evaluation code for Rev's state-of-the-art speech recognition and diarization models. The speech recognition (ASR) code uses the [WeNet](https://github.com/wenet-e2e/wenet) framework and the speech diarization code uses the [Pyannote](https://github.com/pyannote/pyannote-audio) framework. More information can be found on our [blog](rev.com/blog) and the models can be downloaded from [huggingface](https://huggingface.co/Revai). 
 
 ## Table of Contents
@@ -63,5 +64,5 @@ And to run docker
 sudo docker run --entrypoint "/bin/bash" --gpus all --rm -it reginald
 ```
 
-### License
+# License
 See LICENSE for details.
