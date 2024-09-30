@@ -56,7 +56,7 @@ Or check out our demo [on HuggingFace](https://huggingface.co/spaces/Revai/regin
 
 ## Benchmarking <a name="benchmarking"></a>
 
-Unlike many ASR providers, Rev primarily uses long-form speech recognition corpora for benchmarking. We use each model to produce a transcript of an entire audio file, then use [fstalign](https://github.com/revdotcom/fstalign) to align and score the complete transcript. We report macro-average WER across all of the files in a given test suite. We have included our scoring scripts in this repository so that anyone can replicate our work, benchmark other models, or experiment with new long-form test suites. 
+Unlike many ASR providers, Rev primarily uses long-form speech recognition corpora for benchmarking. We use each model to produce a transcript of an entire audio file, then use [fstalign](https://github.com/revdotcom/fstalign) to align and score the complete transcript. We report micro-average WER across all of the reference words in a given test suite. We have included our scoring scripts in this repository so that anyone can replicate our work, benchmark other models, or experiment with new long-form test suites. 
 
 Here, we’ve benchmarked Rev’s model against the best performing open-source models currently available: OpenAI’s Whisper large-v3 and NVIDIA’s Canary-1B, both accessed through HuggingFace. Note that both of these models have significantly more parameters than Reginald. We use simple chunking with no overlap - 30s chunks for Whisper and Canary, and 20s chunks for Reginald. These results use CTC prefix beam search with attention rescoring. For Whisper and Canary, we use NeMo to normalize the model outputs before scoring.
 
