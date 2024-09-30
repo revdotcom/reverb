@@ -53,7 +53,7 @@ if __name__ == '__main__':
         clustering='AgglomerativeClustering',
         use_auth_token=hf_access_token)
 
-    if args.lstm_model == 'Revai/fico':
+    if args.lstm_model == 'Revai/reverb-diarization-v1':
         min_duration_off = V1_MIN_DURATION_OFF
         clustering_threshold = V1_CLUSTERING_THRESHOLD
         clustering_method = V1_CLUSTERING_METHOD
