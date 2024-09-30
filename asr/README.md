@@ -21,7 +21,7 @@ Reverb ASR was trained on 200,000 hours of English speech, all expertly transcri
 ## Code <a name="code"></a>
 The folder `wenet` is taken a fork of the [WeNet](https://github.com/wenet-e2e/wenet) repository, with some modifications made for Rev-specific architecture.
 
-The folder `wer_evaluation` contains instructions and code for running different benchmark utlities. These scripts are not specific to the Reginald architecture.
+The folder `wer_evaluation` contains instructions and code for running different benchmark utlities. These scripts are not specific to the Reverb architecture.
 
 ## Features <a name="features"></a>
 
