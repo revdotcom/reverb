@@ -3,10 +3,10 @@ This repository contains 2 new speaker diarization models built upon the
 [PyAnnote](https://github.com/pyannote/pyannote-audio) framework. These models are trained and intended 
 for the usage with ASR system (speaker attributed ASR). 
 
-The smaller model - `Fico` - provides a **16.5%** relative improvement in WDER (Word Diarization Error Rate) 
+The smaller model - `reverb diarization V1` - provides a **16.5%** relative improvement in WDER (Word Diarization Error Rate) 
 compared to the baseline pyannote3.0 model, 
 evaluated on over 1,250,000 tokens across five different test suites.
-The larger model - `Babis` - offers **22.25%** relative improvement over pyannote3.0 model.
+The larger model - `reverb diarization V2` - offers **22.25%** relative improvement over pyannote3.0 model.
 
 Both models can be found on HF https://huggingface.co/Revai and are integrated into HF via pyannote.
 
@@ -25,7 +25,7 @@ You can run diarization on a single audio file (or list of audio files) using th
 ```bash
 python infer_pyannote3.0.py /path/to/audios --out-dir /path/to/outdir
 ```
-You can specify the model you want to run via the `--lstm-model` argument - `Revai/fico` or `Revai/babis` 
+You can specify the model you want to run via the `--lstm-model` argument - `Revai/reverb-diarization-v1` or `Revai/reverb-diarization-v2` 
 
 
 ### Assigning words to speakers
@@ -61,13 +61,13 @@ for evaluating system performance and guiding improvements.
 For this reason we only report WDER metrics. We also plan to add WDER into `pyannote.metrics`
 codebase.
 
-### fico
+### reverb diarization V1
 | Test suite                                                                         | WDER  |
 |------------------------------------------------------------------------------------|-------|
 | [earnings21](https://github.com/revdotcom/speech-datasets/tree/rttm_v1/earnings21) | 0.047 |
  | rev16 | 0.077 | 
 
-### babis
+### reverb diarization V2
 | Test suite                                                                         | WDER  |
 |------------------------------------------------------------------------------------|-------|
 | [earnings21](https://github.com/revdotcom/speech-datasets/tree/rttm_v1/earnings21) | 0.046 |
