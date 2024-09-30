@@ -27,8 +27,8 @@ Long-form WDER results, in combination with Rev's ASR:
 | Model            | Earnings21 |  Rev16 |
 |------------------|------------|-------|
 | Pyannote3.0  |    0.051    |   0.090   |
-| Rev Fico |      0.047 |   0.077 |
-| Rev Babis      |      0.046 |   0.078 |
+| reverb diarization V1 |      0.047 |   0.077 |
+| reverb diarization V2 |      0.046 |   0.078 |
 
 ## Installation
 We recommend using a virtual environment with a tool such as [anaconda](https://anaconda.org/). You might need to set your 
