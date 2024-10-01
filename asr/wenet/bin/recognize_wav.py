@@ -197,7 +197,7 @@ def main():
         sym_path = Path(configs["tokenizer_conf"]["symbol_table_path"])
         if not sym_path.is_absolute():
             # Assume it's adjacent to the model
-            configs["tokenizer_conf"]["symbol_table_path"] = Path(args.checkpoint.parent / sym_path).as_posix()
+            configs["tokenizer_conf"]["symbol_table_path"] = (Path(args.checkpoint).parent / sym_path).as_posix()
 
     if args.bpe_path:
         configs["tokenizer_conf"]["bpe_path"] = args.bpe_path
@@ -206,7 +206,7 @@ def main():
         bpe_path = Path(configs["tokenizer_conf"]["bpe_path"])
         if not bpe_path.is_absolute():
             # Assume it's adjacent to the model
-            configs["tokenizer_conf"]["bpe_path"] = Path(args.checkpoint.parent / bpe_path).as_posix()
+            configs["tokenizer_conf"]["bpe_path"] = (Path(args.checkpoint).parent / bpe_path).as_posix()
     tokenizer = init_tokenizer(configs)
 
     feats = compute_feats(
