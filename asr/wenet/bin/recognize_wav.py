@@ -51,6 +51,7 @@ def get_args():
     )
     parser.add_argument("--checkpoint", required=True, help="checkpoint model")
     parser.add_argument("--tokenizer-symbols", help="Path to tk.units.txt. Overrides the config path.")
+    parser.add_argument("--bpe-path", help="Path to tk.model. Overrides the config path.")
     parser.add_argument(
         "--beam_size", type=int, default=10, help="beam size for search"
     )
@@ -196,7 +197,16 @@ def main():
         sym_path = Path(configs["tokenizer_conf"]["symbol_table_path"])
         if not sym_path.is_absolute():
             # Assume it's adjacent to the model
-            configs["tokenizer_conf"]["symbol_table_path"] = Path(args.checkpoint.parent / sym_path).as_posix()
+            configs["tokenizer_conf"]["symbol_table_path"] = (Path(args.checkpoint).parent / sym_path).as_posix()
+
+    if args.bpe_path:
+        configs["tokenizer_conf"]["bpe_path"] = args.bpe_path
+    else:
+        # Check if bpe model path is relative or absolute
+        bpe_path = Path(configs["tokenizer_conf"]["bpe_path"])
+        if not bpe_path.is_absolute():
+            # Assume it's adjacent to the model
+            configs["tokenizer_conf"]["bpe_path"] = (Path(args.checkpoint).parent / bpe_path).as_posix()
     tokenizer = init_tokenizer(configs)
 
     feats = compute_feats(
