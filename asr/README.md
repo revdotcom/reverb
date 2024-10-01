@@ -29,7 +29,7 @@ The folder `wer_evaluation` contains instructions and code for running different
 ### Transcription Style Options <a name="transcription-options"></a>
 Reverb ASR was trained to produce transcriptions in either a verbatim style, in which every word is transcribed as spoken; or a non-verbatim style, in which disfluencies may be removed from the transcript. 
 
-Users can specify Reverb ASR's output style with the `verbatimicity` parameter. 1 corresponds to a verbatim transcript that transcribes all spoken content and 0 corresponds to a non-verbatim transcript that removes unnecessary phrases to improve readability. Values between 0 and 1 are accepted and may correspond to a semi-non-verbatim style. The Rev team has found that halfway between verbatim and non-verbatim produces a reader-preferred style for captioning - capturing all content while reducing some hesitations and stutters to make captions fit better on screen. See our demo [here](https://huggingface.co/spaces/Revai/reginald-demo) to test the `verbatimicity` parameter with your own audio.
+Users can specify Reverb ASR's output style with the `verbatimicity` parameter. 1 corresponds to a verbatim transcript that transcribes all spoken content and 0 corresponds to a non-verbatim transcript that removes unnecessary phrases to improve readability. Values between 0 and 1 are accepted and may correspond to a semi-non-verbatim style. The Rev team has found that halfway between verbatim and non-verbatim produces a reader-preferred style for captioning - capturing all content while reducing some hesitations and stutters to make captions fit better on screen. See our demo [here](https://huggingface.co/spaces/Revai/reverb-asr-demo) to test the `verbatimicity` parameter with your own audio.
 
 ### Decoding Options <a name="decoding-options"></a>
 
@@ -53,7 +53,7 @@ python wenet/bin/recognize_wav.py --config config.yaml \
     --results_dir output
 ```
 
-Or check out our demo [on HuggingFace](https://huggingface.co/spaces/Revai/reginald-demo).
+Or check out our demo [on HuggingFace](https://huggingface.co/spaces/Revai/reverb-asr-demo).
 
 
 ## Benchmarking <a name="benchmarking"></a>
