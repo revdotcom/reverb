@@ -11,7 +11,7 @@
 ### Usage
 ```
 python wenet/bin/recognize_wav.py --config config.yaml \
-    --checkpoint model.pt \
+    --checkpoint reverb_asr_v1.pt \
     --audio hello_world.wav \
     --results_dir output
 ```
@@ -45,7 +45,7 @@ Decoding options are:
 ## Usage <a name="usage"></a>
 ```
 python wenet/bin/recognize_wav.py --config config.yaml \
-    --checkpoint model.pt \
+    --checkpoint reverb_asr_v1.pt \
     --audio hello_world.wav \
     --modes ctc_prefix_beam_search attention_rescoring \
     --gpu 0 \
