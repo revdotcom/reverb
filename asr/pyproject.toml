@@ -15,4 +15,5 @@ dependencies = [
   "typeguard==2.*",
   "wandb",
   "pyyaml",
+  "numpy<2",
 ]
