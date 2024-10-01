@@ -50,6 +50,7 @@ def get_args():
         "--gpu", type=int, default=-1, help="gpu id for this rank, -1 for cpu"
     )
     parser.add_argument("--checkpoint", required=True, help="checkpoint model")
+    parser.add_argument("--tokenizer-symbols", help="Path to tk.units.txt. Overrides the config path.")
     parser.add_argument(
         "--beam_size", type=int, default=10, help="beam size for search"
     )
@@ -188,6 +189,14 @@ def main():
         configs["encoder_conf"]["input_layer"], 4
     )
 
+    if args.tokenizer_symbols:
+        configs["tokenizer_conf"]["symbol_table_path"] = args.tokenizer_symbols
+    else:
+        # Check if symbol table path is relative or absolute
+        sym_path = Path(configs["tokenizer_conf"]["symbol_table_path"])
+        if not sym_path.is_absolute():
+            # Assume it's adjacent to the model
+            configs["tokenizer_conf"]["symbol_table_path"] = Path(args.checkpoint.parent / sym_path).as_posix()
     tokenizer = init_tokenizer(configs)
 
     feats = compute_feats(

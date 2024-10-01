@@ -10,9 +10,10 @@
 
 ### Usage
 ```
-python wenet/bin/recognize_wav.py --config model.yaml \
+python wenet/bin/recognize_wav.py --config config.yaml \
     --checkpoint model.pt \
-    --audio hello_world.wav
+    --audio hello_world.wav \
+    --results_dir output
 ```
 
 ## About <a name="about"></a>
@@ -43,12 +44,13 @@ Decoding options are:
 
 ## Usage <a name="usage"></a>
 ```
-python wenet/bin/recognize_wav.py --config model.yaml \
+python wenet/bin/recognize_wav.py --config config.yaml \
     --checkpoint model.pt \
     --audio hello_world.wav \
     --modes ctc_prefix_beam_search attention_rescoring \
     --gpu 0 \
-    --verbatimicity 1.0
+    --verbatimicity 1.0 \
+    --results_dir output
 ```
 
 Or check out our demo [on HuggingFace](https://huggingface.co/spaces/Revai/reginald-demo).
