@@ -1,7 +1,7 @@
 ![Rev Logo](resources/logo_purple.png#gh-light-mode-only)
 ![Rev Logo](resources/logo_white.png#gh-dark-mode-only)
 # Reverb
-Open source inference and evaluation code for Rev's state-of-the-art speech recognition and diarization models. The speech recognition (ASR) code uses the [WeNet](https://github.com/wenet-e2e/wenet) framework and the speech diarization code uses the [Pyannote](https://github.com/pyannote/pyannote-audio) framework. More detailed model descriptions can be found in our [blog](https://www.rev.com/blog/speech-to-text-technology/) and the models can be downloaded from [huggingface](https://huggingface.co/Revai). 
+Open source inference and evaluation code for Rev's state-of-the-art speech recognition and diarization models. The speech recognition (ASR) code uses the [WeNet](https://github.com/wenet-e2e/wenet) framework and the speech diarization code uses the [Pyannote](https://github.com/pyannote/pyannote-audio) framework. More detailed model descriptions can be found in our [blog](https://www.rev.com/blog/speech-to-text-technology/introducing-reverb-open-source-asr-diarization) and the models can be downloaded from [huggingface](https://huggingface.co/Revai). 
 
 ## Table of Contents
 - [ASR](#asr)
