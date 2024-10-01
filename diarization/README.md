@@ -3,10 +3,10 @@ This repository contains 2 new speaker diarization models built upon the
 [PyAnnote](https://github.com/pyannote/pyannote-audio) framework. These models are trained and intended 
 for the usage with ASR system (speaker attributed ASR). 
 
-The smaller model - `reverb diarization V1` - provides a **16.5%** relative improvement in WDER (Word Diarization Error Rate) 
+The smaller model - `Reverb Diarization V1` - provides a **16.5%** relative improvement in WDER (Word Diarization Error Rate) 
 compared to the baseline pyannote3.0 model, 
 evaluated on over 1,250,000 tokens across five different test suites.
-The larger model - `reverb diarization V2` - offers **22.25%** relative improvement over pyannote3.0 model.
+The larger model - `Reverb Diarization V2` - offers **22.25%** relative improvement over pyannote3.0 model.
 
 Both models can be found on HF https://huggingface.co/Revai and are integrated into HF via pyannote.
 
@@ -15,6 +15,7 @@ Both models can be found on HF https://huggingface.co/Revai and are integrated i
   - [Assigning words to speakers](#assigning-words-to-speakers)
   - [Running training script](#running-training-script)
 - [Results](#results)
+- [Acknowledgments](#Acknowledgments)
 
 ## Usage
 We recommend running on GPU. Dockerfile is CUDA ready and CUDA 12.4+ is required.
@@ -61,14 +62,17 @@ for evaluating system performance and guiding improvements.
 For this reason we only report WDER metrics. We also plan to add WDER into `pyannote.metrics`
 codebase.
 
-### reverb diarization V1
+### Reverb Diarization V1
 | Test suite                                                                         | WDER  |
 |------------------------------------------------------------------------------------|-------|
 | [earnings21](https://github.com/revdotcom/speech-datasets/tree/rttm_v1/earnings21) | 0.047 |
  | rev16 | 0.077 | 
 
-### reverb diarization V2
+### Reverb Diarization V2
 | Test suite                                                                         | WDER  |
 |------------------------------------------------------------------------------------|-------|
 | [earnings21](https://github.com/revdotcom/speech-datasets/tree/rttm_v1/earnings21) | 0.046 |
 | rev16 | 0.078 |
+
+## Acknowledgments
+Special thanks to Hervé Bredin for developing and open-sourcing pyannote.
