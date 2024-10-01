@@ -52,6 +52,7 @@ def get_args():
     parser.add_argument("--checkpoint", required=True, help="checkpoint model")
     parser.add_argument("--tokenizer-symbols", help="Path to tk.units.txt. Overrides the config path.")
     parser.add_argument("--bpe-path", help="Path to tk.model. Overrides the config path.")
+    parser.add_argument("--cmvn-path", help="Path to cmvn. Overrides the config path.")
     parser.add_argument(
         "--beam_size", type=int, default=10, help="beam size for search"
     )
@@ -189,6 +190,15 @@ def main():
     output_frame_length = input_frame_length * frame_downsampling_factor.get(
         configs["encoder_conf"]["input_layer"], 4
     )
+
+    if args.cmvn_path:
+        configs["cmvn_conf"]["cmvn_file"] = args.cmvn_path
+    else:
+        # Check if symbol table path is relative or absolute
+        cmvn_path = Path(configs["cmvn_conf"]["cmvn_file"])
+        if not cmvn_path.is_absolute():
+            # Assume it's adjacent to the model
+            configs["cmvn_conf"]["cmvn_file"] = (Path(args.checkpoint).parent / cmvn_path).as_posix()
 
     if args.tokenizer_symbols:
         configs["tokenizer_conf"]["symbol_table_path"] = args.tokenizer_symbols

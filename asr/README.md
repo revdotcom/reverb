@@ -13,7 +13,7 @@
 python wenet/bin/recognize_wav.py --config config.yaml \
     --checkpoint reverb_asr_v1.pt \
     --audio hello_world.wav \
-    --results_dir output
+    --result_dir output
 ```
 
 ## About <a name="about"></a>
@@ -50,7 +50,7 @@ python wenet/bin/recognize_wav.py --config config.yaml \
     --modes ctc_prefix_beam_search attention_rescoring \
     --gpu 0 \
     --verbatimicity 1.0 \
-    --results_dir output
+    --result_dir output
 ```
 
 Or check out our demo [on HuggingFace](https://huggingface.co/spaces/Revai/reverb-asr-demo).
