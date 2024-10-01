@@ -25,7 +25,7 @@ ENV HUGGINGFACE_ACCESS_TOKEN=${HUGGINGFACE_ACCESS_TOKEN}
 # manually download ASR model
 # diarization will be download automatically when running the script due to HF integration
 RUN git lfs install
-RUN git clone https://${HUGGINGFACE_ACCESS_TOKEN}:${HUGGINGFACE_ACCESS_TOKEN}@huggingface.co/Revai/reginald
+RUN git clone https://${HUGGINGFACE_ACCESS_TOKEN}:${HUGGINGFACE_ACCESS_TOKEN}@huggingface.co/Revai/reverb-asr
 
 
 RUN pip3 install -r /workspace/asr/requirements.txt
