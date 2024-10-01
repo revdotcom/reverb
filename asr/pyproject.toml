@@ -8,3 +8,11 @@ packages = ["wenet"]
 [project]
 name = "wenet"
 version = "0.1.0"
+dependencies = [
+  "torchaudio==2.2.2",
+  "torch==2.2.2",
+  "openai-whisper",
+  "typeguard==2.*",
+  "wandb",
+  "pyyaml",
+]
