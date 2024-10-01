@@ -202,7 +202,7 @@ def main():
     if args.bpe_path:
         configs["tokenizer_conf"]["bpe_path"] = args.bpe_path
     else:
-        # Check if symbol table path is relative or absolute
+        # Check if bpe model path is relative or absolute
         bpe_path = Path(configs["tokenizer_conf"]["bpe_path"])
         if not bpe_path.is_absolute():
             # Assume it's adjacent to the model
