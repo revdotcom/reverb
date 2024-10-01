@@ -69,7 +69,7 @@ sudo docker run --entrypoint "/bin/bash" --gpus all --rm -it reverb
 
 # Hosting the Model
 If your usecase requires a to deploy these models at a larger scale and maintaining strict
-security requirements, consider using our other release: https://github.com/revdotcom/revai.
+security requirements, consider using our other release: https://github.com/revdotcom/reverb-self-hosted.
 This setup will give you full control over the deployment of our models on your own infrastructure
 without the need for internet connectivity or cloud dependencies.
 
