@@ -75,3 +75,6 @@ without the need for internet connectivity or cloud dependencies.
 
 # License
 See LICENSE for details.
+
+# Contributors
+Nishchal Bhandari, Danny Chen, Miguel Del Rio, Natalie Delworth, Jennifer Drexler Fox, Miguel Jette, Quinn McNamara, Corey Miller, Ondrej Novotny, Jan Profant, Nan Qin, Martin Ratajczak, and Jean-Philippe Robichaud.
