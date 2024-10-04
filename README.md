@@ -48,7 +48,7 @@ pip install -r diarization/requirements.txt
 export PYTHONPATH="$(pwd)"/asr:$PYTHONPATH  # adding this to make wenet/ work
 ```
 
-To get the mode files, make sure that git lfs is correctly installed on your system and clone the models from huggingface.
+To get the model files, make sure that git lfs is correctly installed on your system and clone the models from huggingface.
 ```bash
 git lfs install
 git clone https://huggingface.co/Revai/reverb-asr
