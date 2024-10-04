@@ -11,7 +11,7 @@
 ### Usage <a name="usage"></a>
 From this directory (which is at `/workspace/asr` in the docker image):
 ```
-export PYTHONPATH="$(pwd)"/asr:$PYTHONPATH
+export PYTHONPATH="$(pwd)"/asr:$PYTHONPATH  # If you are not using docker and haven't already done so
 python wenet/bin/recognize_wav.py --config $config \
     --checkpoint $model \
     --audio $audio \
