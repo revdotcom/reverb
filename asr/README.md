@@ -8,13 +8,35 @@
 
 ## Getting Started <a name="getting-started"></a>
 
-### Usage
+### Usage <a name="usage"></a>
+From this directory (which is at `/workspace/asr` in the docker image):
 ```
-python wenet/bin/recognize_wav.py --config config.yaml \
-    --checkpoint reverb_asr_v1.pt \
-    --audio hello_world.wav \
+python wenet/bin/recognize_wav.py --config $config \
+    --checkpoint $model \
+    --audio $audio \
+    --modes ctc_prefix_beam_search attention_rescoring \
+    --gpu 0 \
+    --verbatimicity 1.0 \
     --result_dir output
 ```
+
+where `$config` points to the `config.yaml` file and `$model` points to the `reverb_asr_v1.pt` file.
+
+If you are using the docker image, these paths will be:
+```
+model="/workspace/reverb-asr/reverb_asr_v1.pt"
+config="/workspace/reverb-asr/config.yaml"
+```
+
+Or if you followed the python installation instructions, these files are under the `reverb-asr` directory in the root of the repository:
+```
+model="../reverb-asr/reverb_asr_v1.pt"
+config="../reverb-asr/config.yaml"
+```
+
+In place of `$audio`, pass in the wav file you want to run ASR on.
+
+Or check out our demo [on HuggingFace](https://huggingface.co/spaces/Revai/reverb-asr-demo).
 
 ## About <a name="about"></a>
 Reverb ASR was trained on 200,000 hours of English speech, all expertly transcribed by humans - the largest corpus of human transcribed audio ever used to train an open-source model. The quality of this data has produced the world’s most accurate English automatic speech recognition (ASR) system, using an efficient model architecture that can be run on either CPU or GPU. Additionally, Reverb ASR provides user control over the level of verbatimicity of the output transcript, making it ideal for both clean, readable transcription and use-cases like audio editing that require transcription of every spoken word including hesitations and re-wordings. Users can specify fully verbatim, fully non-verbatim, or anywhere in between for their transcription output.
@@ -42,18 +64,6 @@ Decoding options are:
 - `attention_rescoring`
 - `joint_decoding`
 
-## Usage <a name="usage"></a>
-```
-python wenet/bin/recognize_wav.py --config config.yaml \
-    --checkpoint reverb_asr_v1.pt \
-    --audio hello_world.wav \
-    --modes ctc_prefix_beam_search attention_rescoring \
-    --gpu 0 \
-    --verbatimicity 1.0 \
-    --result_dir output
-```
-
-Or check out our demo [on HuggingFace](https://huggingface.co/spaces/Revai/reverb-asr-demo).
 
 
 ## Benchmarking <a name="benchmarking"></a>

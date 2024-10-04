@@ -41,20 +41,21 @@ conda create -n reverb-env python=3.10
 conda activate reverb-env
 ```
 
+Then, in the root directory of this repository,
 ```bash
 pip install -r asr/requirements.txt
 pip install -r diarization/requirements.txt
 export PYTHONPATH="$(pwd)"/asr:$PYTHONPATH  # adding this to make wenet/ work
 ```
 
-Make sure that git lfs is correctly installed on your system.
+To get the mode files, make sure that git lfs is correctly installed on your system and clone the models from huggingface.
 ```bash
 git lfs install
-git clone https://huggingface.co/Revai/reverb
+git clone https://huggingface.co/Revai/reverb-asr
 ```
 
 ### Docker Image
-Alternatively, you can use Docker to run ASR and/or diarization without needing to install dependencies
+Alternatively, you can use Docker to run ASR and/or diarization without needing to install dependencies (including the model files).
 directly on your system. First, make sure Docker is installed on your system. If you wish to run
 on NVIDIA GPU, more steps might be required.
 Then, run the following command to build the Docker image:
