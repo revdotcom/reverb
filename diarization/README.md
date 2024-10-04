@@ -19,14 +19,31 @@ Both models can be found on HF https://huggingface.co/Revai and are integrated i
 
 ## Usage
 We recommend running on GPU. Dockerfile is CUDA ready and CUDA 12.4+ is required.
-The output format is a standard RTTM stored in the output directory with `basename.rttm` format.
 
-You can run diarization on a single audio file (or list of audio files) using the
-`infer_pyannote3.0.py` script. The same approach can be used for Docker.
+```python
+# taken from https://huggingface.co/pyannote/speaker-diarization-3.1 - see for more details
+# instantiate the pipeline
+from pyannote.audio import Pipeline
+pipeline = Pipeline.from_pretrained(
+  "Revai/reverb-diarization-v1",
+  use_auth_token="HUGGINGFACE_ACCESS_TOKEN_GOES_HERE")
+
+# run the pipeline on an audio file
+diarization = pipeline("audio.wav")
+
+# dump the diarization output to disk using RTTM format
+with open("audio.rttm", "w") as rttm:
+    diarization.write_rttm(rttm)
+```
+
+Eventually, you can use a provided script `infer_pyannote3.0.py`.
+You can run diarization on a single audio file (or list of audio files). The same approach can be used for Docker. 
+The output format is a standard RTTM stored in the output directory with `basename.rttm` format.
 ```bash
 python infer_pyannote3.0.py /path/to/audios --out-dir /path/to/outdir
 ```
-You can specify the model you want to run via the `--lstm-model` argument - `Revai/reverb-diarization-v1` or `Revai/reverb-diarization-v2` 
+You can specify the model you want to run via the `--pipeline-model` argument - 
+`Revai/reverb-diarization-pipeline-v1` or `Revai/reverb-diarization-pipeline-v2`.
 
 
 ### Assigning words to speakers
