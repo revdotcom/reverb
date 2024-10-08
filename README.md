@@ -75,7 +75,7 @@ This setup will give you full control over the deployment of our models on your 
 without the need for internet connectivity or cloud dependencies.
 
 # License
-See LICENSE for details.
+The license in this repository applies *only to the code not the models*. See LICENSE for details. For model licenses, check out their pages on HuggingFace.
 
 # Citations
 If you make use of this model, please cite this paper
