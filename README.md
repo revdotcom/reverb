@@ -77,5 +77,16 @@ without the need for internet connectivity or cloud dependencies.
 # License
 See LICENSE for details.
 
+# Citations
+If you make use of this model, please cite this paper
+```
+@article{bhandari2024reverb,
+  title={Reverb: Open-Source ASR and Diarization from Rev},
+  author={Bhandari, Nishchal and Chen, Danny and del Río Fernández, Miguel Ángel and Delworth, Natalie and Fox, Jennifer Drexler and Jetté, Miguel and McNamara, Quinten and Miller, Corey and Novotný, Ondřej and Profant, Ján and Qin, Nan and Ratajczak, Martin and Robichaud, Jean-Philippe},
+  journal={arXiv preprint arXiv:2410.03930},
+  year={2024}
+}
+```
+
 # Contributors
 Nishchal Bhandari, Danny Chen, Miguel Del Rio, Natalie Delworth, Jennifer Drexler Fox, Miguel Jette, Quinn McNamara, Corey Miller, Ondrej Novotny, Jan Profant, Nan Qin, Martin Ratajczak, and Jean-Philippe Robichaud.
