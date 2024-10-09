@@ -31,9 +31,12 @@ def get_args():
         description="Run automatic speech recognition on a given wav file using the Rev model."
     )
     parser.add_argument("--audio_file", required=True, help="Audio to transcribe")
-    parser.add_argument("--config", default=None, help="config file")
-    parser.add_argument("--checkpoint", default=None, help="checkpoint model")
-    parser.add_argument("--model", default=None, choices=get_available_models(), help="checkpoint model")
+    parser.add_argument("--config", default=None, help="Path to config file")
+    parser.add_argument("--checkpoint", default=None, help="Path to Reverb model checkpoint")
+    parser.add_argument("--model", default=None, help="Path to directory containing config"
+                                                      " and checkpoint for a reverb model"
+                                                      " or the name of a pretrained model"
+                                                      f" from: {','.join(get_available_models())}")
     parser.add_argument(
         "--gpu", type=int, default=-1, help="gpu id for this rank, -1 for cpu"
     )
