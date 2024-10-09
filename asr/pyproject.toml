@@ -11,7 +11,7 @@ authors = [
   {name = "Miguel Angel del Rio Fernandez", email = "miguel.delrio@rev.com"},
 ]
 maintainers = [
-  {name = "Miguel Angel del Rio Fernandez", email = "miguel.delrio@rev.com"},
+  {name = "Rev Speechteam", email = "speechteam@rev.com"},
 ]
 description = "A simplified python packge to interact with the reverb models"
 readme = "README.md"
