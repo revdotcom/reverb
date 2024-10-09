@@ -160,7 +160,7 @@ def main():
     if model_arg_set:
         reverb_model = load_model(args.model)
     else:
-        reverb_model = Reverb(
+        reverb_model = ReverbASR(
             args.config,
             args.checkpoint,
             cmvn_path = args.cmvn_path,
