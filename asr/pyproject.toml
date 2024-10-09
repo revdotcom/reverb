@@ -29,4 +29,4 @@ wenet = "wenet"
 dependencies = {file = ["requirements.txt"]}
 
 [project.scripts]
-recognize_wav = "wenet.bin.recognize_wav:main"
+reverb = "wenet.bin.recognize_wav:main"
