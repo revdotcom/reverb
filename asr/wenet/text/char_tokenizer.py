@@ -1,3 +1,4 @@
+import logging
 import re
 
 from os import PathLike
@@ -7,7 +8,6 @@ from wenet.text.base_tokenizer import BaseTokenizer
 
 
 class CharTokenizer(BaseTokenizer):
-
     def __init__(
         self,
         symbol_table: Union[str, PathLike, Dict],
@@ -16,7 +16,7 @@ class CharTokenizer(BaseTokenizer):
         connect_symbol: str = '',
         unk='<unk>',
     ) -> None:
-        print(f"JPR in char_tokenizer : {symbol_table=}, {non_lang_syms=}, {split_with_space=}, {connect_symbol=}, {unk=}   ")
+        logging.debug(f"JPR in char_tokenizer : {symbol_table=}, {non_lang_syms=}, {split_with_space=}, {connect_symbol=}, {unk=}   ")
         self.non_lang_syms_pattern = None
         if non_lang_syms is not None:
             self.non_lang_syms_pattern = re.compile(

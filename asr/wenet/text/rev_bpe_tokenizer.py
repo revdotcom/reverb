@@ -1,3 +1,4 @@
+import logging
 from os import PathLike
 from typing import Dict, List, Optional, Union
 from wenet.text.char_tokenizer import CharTokenizer
@@ -18,7 +19,7 @@ class RevBpeTokenizer(CharTokenizer):
         unk='<unk>',
         full_config: Dict={}
     ) -> None:
-        print(f"{bpe_model=}, {symbol_table=}, {non_lang_syms=}, {split_with_space=}, {connect_symbol=}, {unk=}, {full_config=}")  
+        logging.debug(f"{bpe_model=}, {symbol_table=}, {non_lang_syms=}, {split_with_space=}, {connect_symbol=}, {unk=}, {full_config=}")
         super().__init__(symbol_table, non_lang_syms, split_with_space,
                          connect_symbol, unk)
         self.remove_sw = full_config.get('remove_sw', True)
@@ -46,7 +47,7 @@ class RevBpeTokenizer(CharTokenizer):
             line = line.replace('<sw>', '').replace('  ',' ').strip()
 
         if self.replace_unk_as_unknown:
-            line = line.replace("<unk>", "<unknown>")    
+            line = line.replace("<unk>", "<unknown>")
 
         # other things might be required here...
         # like removing trailing dashes, etc.

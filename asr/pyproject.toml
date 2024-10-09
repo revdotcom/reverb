@@ -2,19 +2,31 @@
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools.packages.find]
-where = ["."]
-
-
 [project]
-name = "wenet"
+name = "reverb"
 version = "0.1.0"
-dependencies = [
-  "torchaudio==2.2.2",
-  "torch==2.2.2",
-  "openai-whisper",
-  "typeguard==2.*",
-  "wandb",
-  "pyyaml",
-  "numpy<2",
+dynamic = ["dependencies"]
+requires-python = ">=3.10"
+authors = [
+  {name = "Miguel Angel del Rio Fernandez", email = "miguel.delrio@rev.com"},
 ]
+maintainers = [
+  {name = "Miguel Angel del Rio Fernandez", email = "miguel.delrio@rev.com"},
+]
+description = "A simplified python packge to interact with the reverb models"
+readme = "README.md"
+license = {file = "LICENSE"}
+keywords = ["asr", "reverb", "rev", "diarization"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python :: 3.10"
+]
+
+[tool.setuptools.package-dir]
+wenet = "wenet"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[project.scripts]
+recognize_wav = "wenet.bin.recognize_wav:main"
