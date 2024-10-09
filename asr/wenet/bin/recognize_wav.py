@@ -22,7 +22,8 @@ from pathlib import Path
 from math import ceil
 from typing import Generator, List
 import yaml
-from wenet.cli.reverb import load_model, Reverb
+from wenet.cli.reverb import load_model, ReverbASR
+from wenet import get_available_models
 
 
 def get_args():
@@ -32,7 +33,7 @@ def get_args():
     parser.add_argument("--audio_file", required=True, help="Audio to transcribe")
     parser.add_argument("--config", default=None, help="config file")
     parser.add_argument("--checkpoint", default=None, help="checkpoint model")
-    parser.add_argument("--model", default=None, choices={"reverb_asr_v1"}, help="checkpoint model")
+    parser.add_argument("--model", default=None, choices=get_available_models(), help="checkpoint model")
     parser.add_argument(
         "--gpu", type=int, default=-1, help="gpu id for this rank, -1 for cpu"
     )
@@ -155,7 +156,7 @@ def main():
     config_checkpoint_args_set = (args.checkpoint is not None and args.config is not None)
 
     if model_arg_set == config_checkpoint_args_set:
-        raise RuntimeError("One of either args.model or (args.checkpoint and args.config) must be set.")
+        raise RuntimeError("One of either --model or (--checkpoint and --config) must be set.")
 
     if model_arg_set:
         reverb_model = load_model(args.model)

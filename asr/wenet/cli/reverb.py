@@ -5,7 +5,7 @@ import os
 from itertools import groupby, chain
 from pathlib import Path
 from math import ceil
-from typing import Any, Generator, List
+from typing import List
 import shutil
 import yaml
 
@@ -15,6 +15,7 @@ import torch.nn.functional as F
 import torchaudio
 from torchaudio.compliance import kaldi
 
+from wenet.cli.utils import hyps_to_ctm, hyps_to_txt
 from wenet.transformer.cmvn import GlobalCMVN
 from wenet.transformer.search import DecodeResult
 from wenet.text.rev_bpe_tokenizer import RevBpeTokenizer
@@ -27,14 +28,11 @@ from wenet.bin.ctc_align import ctc_align, adjust_model_time_offset
 
 CACHED_MODELS_DIR = Path.home() / ".cache/reverb"
 _MODELS = {
-    "reverb_asr_v1": {
-        "repo": "https://huggingface.co/Revai/reverb-asr",
-        "checkpoint": "reverb_asr_v1.pt"
-    },
+    "reverb_asr_v1": "https://huggingface.co/Revai/reverb-asr",
 }
 
 
-class Reverb:
+class ReverbASR:
     def __init__(self,
         config,
         checkpoint,
@@ -197,7 +195,7 @@ class Reverb:
     def transcribe_modes(
         self,
         audio_file,
-        modes: List[str] | None = None,
+        modes: List[str],
         format: str = "txt",
         verbatimicity: float = 1.0,
         chunk_size: int = 2051,
@@ -226,9 +224,6 @@ class Reverb:
             dither=self.test_conf["fbank_conf"]["dither"],
         )
         feats = feats.to(self.device)
-
-        if modes is None:
-            modes = ["ctc_prefix_beam_search"]
 
         with torch.no_grad():
             cat_embs = torch.tensor(
@@ -313,6 +308,7 @@ class Reverb:
             timings_adjustment = timings_adjustment,
         )[0]
 
+
 def get_output(
     format: str,
     tokenizer: RevBpeTokenizer,
@@ -345,24 +341,44 @@ def get_output(
     return format_delimiter.join(output)
 
 
-def hyps_to_ctm(
-    audio_name: str,
-    path: list[dict[str, Any]]
-) -> Generator[str, None, None]:
-    """Convert a given set of decode results for a single audio file into CTM lines."""
-    for line in path:
-        start_seconds = line['start_time_ms'] / 1000
-        duration_seconds = line['end_time_ms'] / 1000 - start_seconds
-        ctm_line = f"{audio_name} 0 {start_seconds:.2f} {duration_seconds:.2f} {line['word']} {line['confidence']:.2f}"
-        yield ctm_line
+def load_model(
+    model: str
+):
+    """Loads a reverb model. If "model" points to a path that exists,
+    tries to load a model using those files at "model".
+    If not specified, downloads the latest reverb model.
+    """
+    if Path(model).exists():
+        model_dir = Path(model)
+        config_path = model_dir / "config.yaml"
+        checkpoint_path = list(model_dir.glob("*.pt"))[0]
+    elif model in _MODELS:
+        model_dir = CACHED_MODELS_DIR / model
+        config_path = model_dir / "config.yaml"
+        checkpoint_path = model_dir / f"{model}.pt"
+        if not (
+            CACHED_MODELS_DIR.exists()
+            and model_dir.exists()
+            and config_path.exists()
+            and checkpoint_path.exists()
+        ):
+            CACHED_MODELS_DIR.parent.mkdir(exist_ok=True, parents=True)
+            shutil.rmtree(model_dir, ignore_errors=True)
+            download_model(_MODELS[model], model_dir)
+    else:
+        raise ValueError(f"Please specify a local path to a model or one of our pretrained models: {','.join(get_available_models())}")
+
+    config_path = config_path.resolve()
+    checkpoint_path = checkpoint_path.resolve()
+    logging.info(f"Loading the model with {config_path = } and {checkpoint_path = }")
+    return ReverbASR(
+        str(config_path),
+        str(checkpoint_path)
+    )
 
 
-def hyps_to_txt(
-    path: list[dict[str, Any]]
-) -> Generator[str, None, None]:
-    """Convert a given set of decode results for a single audio file into CTM lines."""
-    for line in path:
-        yield line['word']
+def get_available_models():
+    return list(_MODELS.keys())
 
 
 def download_model(
@@ -374,36 +390,3 @@ def download_model(
     """
     from git import Repo
     Repo.clone_from(url, root)
-
-
-def load_model(
-    model: str | Path
-):
-    """Loads a reverb model. If "model" points to a path that exists,
-    tries to load a model using those files at "model".
-    If not specified, downloads the latest reverb model.
-    """
-    if Path(model).exists():
-        model_dir = Path(model)
-    elif model in _MODELS:
-        # Check cached models
-        repo = _MODELS[model]["repo"]
-        checkpoint = _MODELS[model]["checkpoint"]
-
-        model_dir = CACHED_MODELS_DIR / model
-        if not (
-            CACHED_MODELS_DIR.exists()
-            and model_dir.exists()
-            and (model_dir / "config.yaml").exists()
-            and (model_dir / checkpoint).exists()
-        ):
-            CACHED_MODELS_DIR.parent.mkdir(exist_ok=True, parents=True)
-            shutil.rmtree(model_dir, ignore_errors=True)
-            download_model(repo, model_dir)
-    else:
-        raise ValueError(f"Please specify a local path to a model or one of our pretrained models: {','.join(_MODELS.keys())}")
-
-    return Reverb(
-        str((model_dir / "config.yaml").resolve()),
-        str((model_dir / "reverb_asr_v1.pt").resolve())
-    )
