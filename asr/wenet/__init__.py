@@ -1,1 +1,6 @@
-from wenet.cli.model import load_model  # noqa
+from wenet.cli.reverb import (
+    download_model,
+    get_available_models,
+    load_model,
+    ReverbASR
+)
