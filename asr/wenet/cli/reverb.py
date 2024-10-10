@@ -5,7 +5,7 @@ import os
 from itertools import groupby, chain
 from pathlib import Path
 from math import ceil
-from typing import List
+from typing import Generator, List
 import shutil
 import yaml
 
