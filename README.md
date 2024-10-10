@@ -1,7 +1,7 @@
 ![Rev Logo](resources/logo_purple.png#gh-light-mode-only)
 ![Rev Logo](resources/logo_white.png#gh-dark-mode-only)
 # Reverb
-Open source inference and evaluation code for Rev's state-of-the-art speech recognition and diarization models. The speech recognition (ASR) code uses the [WeNet](https://github.com/wenet-e2e/wenet) framework and the speech diarization code uses the [Pyannote](https://github.com/pyannote/pyannote-audio) framework. More detailed model descriptions can be found in our [blog](https://www.rev.com/blog/speech-to-text-technology/introducing-reverb-open-source-asr-diarization) and the models can be downloaded from [huggingface](https://huggingface.co/Revai). 
+Open source inference and evaluation code for Rev's state-of-the-art speech recognition and diarization models. The speech recognition (ASR) code uses the [WeNet](https://github.com/wenet-e2e/wenet) framework and the speech diarization code uses the [Pyannote](https://github.com/pyannote/pyannote-audio) framework. More detailed model descriptions can be found in our [blog](https://www.rev.com/blog/speech-to-text-technology/introducing-reverb-open-source-asr-diarization) and the models can be downloaded from [huggingface](https://huggingface.co/Revai).
 
 ## Table of Contents
 - [ASR](#asr)
@@ -13,7 +13,7 @@ Open source inference and evaluation code for Rev's state-of-the-art speech reco
 
 
 ### ASR
-Speech-to-text code based on the WeNet framework. See [the ASR folder](https://github.com/revdotcom/reverb/tree/main/asr) for more details and usage instructions. 
+Speech-to-text code based on the WeNet framework. See [the ASR folder](https://github.com/revdotcom/reverb/tree/main/asr) for more details and usage instructions.
 
 Long-form speech recognition WER results:
 | Model            | Earnings21 | Earnings22 | Rev16 |
@@ -33,8 +33,8 @@ Long-form WDER results, in combination with Rev's ASR:
 | Reverb Diarization V2 |      0.046 |   0.078 |
 
 ## Installation
-We recommend using a virtual environment with a tool such as [anaconda](https://anaconda.org/). You might need to set your 
-`HUGGINGFACE_ACCESS_TOKEN` as well since the model itself (ASR and diarization) is downloaded from the HF hub.
+We recommend using a virtual environment with a tool such as [anaconda](https://anaconda.org/). You might need to set your
+`HUGGINGFACE_ACCESS_TOKEN` as well since the model itself (ASR and diarization) is downloaded from the HF hub. For help getting your token checkout [HuggingFace's Original Announcement](https://huggingface.co/blog/password-git-deprecation) and [documentation](https://huggingface.co/docs/hub/security-tokens#user-access-tokens) on access tokens.
 
 ```bash
 conda create -n reverb-env python=3.10
@@ -60,7 +60,7 @@ directly on your system. First, make sure Docker is installed on your system. If
 on NVIDIA GPU, more steps might be required.
 Then, run the following command to build the Docker image:
 ```bash
-docker build -t reverb . --build-arg HUGGINGFACE_ACCESS_TOKEN=${YOUR_HUGGINGFACE_ACCESS_TOKEN} 
+docker build -t reverb . --build-arg HUGGINGFACE_ACCESS_TOKEN=${YOUR_HUGGINGFACE_ACCESS_TOKEN}
 ```
 
 And to run docker
