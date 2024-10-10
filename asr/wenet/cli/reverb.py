@@ -92,7 +92,7 @@ class ReverbASR:
         self,
         config_path: str,
         alternate_path: str | None = None
-    ):
+    ) -> str:
         """Returns the 'alternate_path' if set, otherwise get's the absolute path todo
         'config_path'
         """
