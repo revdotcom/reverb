@@ -163,7 +163,7 @@ class ReverbASR:
         infeats: torch.Tensor,
         chunk_size: int,
         batch_size: int,
-    ):
+    ) -> Generator[Tuple[torch.Tensor, torch.Tensor], None, None]:
         batch_num_feats = chunk_size * batch_size
         num_batches = ceil(infeats.shape[1] / batch_num_feats)
         for b in range(num_batches):
