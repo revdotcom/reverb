@@ -7,7 +7,7 @@
 - [Acknowledgements](#acknowledgements)
 
 # Getting Started <a name="getting-started"></a>
-[!NOTE]
+>[!IMPORTANT]
 >These instructions require that you set up:
 > * HuggingFace access token and have cli login.
 >   * Click the following links for more information on [HuggingFace access tokens](https://huggingface.co/docs/hub/security-tokens#user-access-tokens) and setting up your [cli login](https://huggingface.co/docs/huggingface_hub/en/guides/cli#huggingface-cli-login).
@@ -21,6 +21,13 @@ This codebase is compatible Python 3.10+. To get started, simply run
 pip install .
 ```
 This will install the `reverb` package into your python environment which is a modified version of the [wenet python package](https://github.com/wenet-e2e/wenet/tree/main?tab=readme-ov-file#install-python-package). In order to use `reverb`'s code, make sure you **do not** have another wenet installation in your environment which might cause conflict issues.
+
+> [!TIP]
+> While we suggest using our CLI or Python package to download the reverb model, you can also download it manually by running:
+> ```bash
+> git lfs install
+> git clone https://huggingface.co/Revai/reverb-asr
+> ```
 
 ### Command Line Usage
 The following command can be used to transcribe audio files:
