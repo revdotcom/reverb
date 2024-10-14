@@ -13,7 +13,7 @@ authors = [
 maintainers = [
   {name = "Rev Speechteam", email = "speechteam@rev.com"},
 ]
-description = "A simplified python packge to interact with the reverb models"
+description = "A simplified python package to interact with the reverb models"
 readme = "README.md"
 license = {file = "LICENSE"}
 keywords = ["asr", "reverb", "rev", "diarization"]
