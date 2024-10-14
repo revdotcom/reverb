@@ -1,11 +1,11 @@
 import copy
-from functools import cached_property, lru_cache, partial
+from functools import cached_property, partial
 import logging
 import os
 from itertools import groupby, chain
 from pathlib import Path
 from math import ceil
-from typing import Generator, List
+from typing import Generator, List, Tuple
 import shutil
 import yaml
 
@@ -128,7 +128,6 @@ class ReverbASR:
 
         return test_conf
 
-    @lru_cache
     def compute_feats(
         self,
         audio_file: str,

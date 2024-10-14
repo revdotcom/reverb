@@ -48,11 +48,7 @@ pip install -r diarization/requirements.txt
 export PYTHONPATH="$(pwd)"/asr:$PYTHONPATH  # adding this to make wenet/ work
 ```
 
-To get the model files, make sure that git lfs is correctly installed on your system and clone the models from huggingface.
-```bash
-git lfs install
-git clone https://huggingface.co/Revai/reverb-asr
-```
+Check out the READMEs within each subdirectory for more information on how to use the [ASR](asr/README.md) or [diarization](diarization/README.md) models.
 
 ### Docker Image
 Alternatively, you can use Docker to run ASR and/or diarization without needing to install dependencies (including the model files).

@@ -25,13 +25,13 @@ ENV HUGGINGFACE_ACCESS_TOKEN=${HUGGINGFACE_ACCESS_TOKEN}
 # manually download ASR model
 # diarization will be download automatically when running the script due to HF integration
 RUN git lfs install
-RUN git clone https://${HUGGINGFACE_ACCESS_TOKEN}:${HUGGINGFACE_ACCESS_TOKEN}@huggingface.co/Revai/reverb-asr
+RUN git clone https://${HUGGINGFACE_ACCESS_TOKEN}:${HUGGINGFACE_ACCESS_TOKEN}@huggingface.co/Revai/reverb-asr /root/.cache/reverb/reverb_asr_v1
 
 
-RUN pip3 install -r /workspace/asr/requirements.txt
+RUN pip3 install /workspace/asr/
 RUN pip3 install -r /workspace/diarization/requirements.txt
 
 ENV PYTHONPATH=/workspace/asr/:$PYTHONPATH
 
-RUN python3 /workspace/asr/wenet/bin/recognize_wav.py --help
+RUN reverb --help
 RUN python3 /workspace/diarization/infer_pyannote3.0.py --help
