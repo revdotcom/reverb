@@ -1,48 +1,201 @@
-Rev Model Non-Production License
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
 
-1. Scope and acceptance
-1.1. Scope of the Agreement. This Agreement applies to any use, modification, or Distribution of any Rev Model by You, regardless of the source from which You obtained a copy of such Rev Model.
-1.2. Acceptance. By accessing, using, modifying, Distributing a Rev Model, or by creating, using or distributing a Derivative of the Rev Model, You agree to be bound by this Agreement. 
-1.3. Acceptance on Behalf of a Third-Party. If You accept this Agreement on behalf of Your employer or another person or entity, You represent and warrant that You have the authority to act and accept this Agreement on their behalf. In such a case, the word “You” in this Agreement will refer to Your employer or such other person or entity. 
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
-2. License 
-2.1. Grant of Rights. Subject to Section 3 (Limitations) below, Rev hereby grants You a non-exclusive, royalty-free, worldwide, non-sublicensable, non-transferable, limited license to (a) use, copy, modify, and Distribute the Rev Model and any Derivatives, subject to the conditions provided in Section 2.2 below; and (b) use the Rev Model and any Derivatives to generate Output. 
-2.2. Distribution of Rev Model. Subject to Section 3 below, You may Distribute copies of the Rev Model under the following conditions:  (a) You must make available a copy of this Agreement to third-party recipients of the Rev Model, it being specified that any rights to use the Rev Models shall be directly granted by Rev to said third-party recipients pursuant to the Rev Model Non-Production License agreement executed between these parties; and (b) You must retain in all copies of the Rev Models the following attribution notice within a “Notice” text file distributed as part of such copies: “Licensed by Rev under the Rev Model Non-Production License”.
-2.3. Distribution of Derivatives. Subject to Section 3 below, You may Distribute any Derivatives made by or for You under additional or different terms and conditions, provided that:  (a) in any event, Your use and modification of Rev Model and/or Derivatives shall remain governed by the terms and conditions of this Agreement; (b) You include in any such Derivatives made by or for You prominent notices stating that You modified the applicable Rev Model; (c) You will impose the same terms and conditions with respect to the Rev Model, Derivatives and Output that apply to You under this Agreement; and (d) any terms and conditions You impose on any third-party recipients relating to Derivatives shall neither limit such third-party recipients’ use of the Rev Model in accordance with this Rev Model Non-Production License.
+   1. Definitions.
 
-3. Limitations 
-3.1. Misrepresentation. You must not misrepresent or imply, through any means, that the Derivatives made by or for You and/or any modified version of the Rev Model that You Distribute under your name and responsibility is an official product of Rev or has been endorsed, approved or validated by Rev, unless You are authorized by Us to do so in writing. 
-3.2. Usage Limitation. You shall only use the Rev Models, Derivatives (whether or not created by Rev) and Outputs for testing, research, Personal, or evaluation purposes in Non-Production Environments. Subject to the foregoing, You shall not supply the Rev Models, Derivatives, or Outputs in the course of a commercial activity, whether in return for payment or free of charge, in any medium or form, including but not limited to through a hosted or managed service (e.g. SaaS, cloud instances, etc.), or behind a software layer. 
-3.3. Usage Not Permitted Under this Agreement. If You want to use a Rev Model or a Derivative for any purpose that is not expressly authorized under this Agreement, You must request a license from Rev, which Rev may grant to You in Rev’s sole discretion. Please contact Rev at the following e-mail address if You want to discuss such a license: licensing@rev.com. 
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
 
-4. Intellectual Property 
-4.1. Trademarks. No trademark licenses are granted under this Agreement, and in connection with the Rev Models, You may not use any name or mark owned by or associated with Rev or any of its affiliates, except (a) as required for reasonable and customary use in describing and Distributing the Rev Models and Derivatives made by or for Rev and (b) for attribution purposes as required by this Agreement. 
-4.2. Outputs. We claim no ownership rights in and to the Outputs. You are solely responsible for the Outputs that You generate and their subsequent uses in accordance with this Agreement. Notwithstanding the foregoing, You agree that Your use of the Outputs is subject to the Usage Limitations set forth in Section 3.2 above.
-4.3. Derivatives. By entering into this Agreement, You accept that any Derivatives that You may create or that may be created for You shall be subject to the restrictions set out in Section 3 of this Agreement. 
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
 
-5. Liability 
-5.1. Limitation of Liability. In no event, unless required by applicable law (such as the deliberate and grossly negligent acts of Rev) or agreed to in writing, shall Rev be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this Agreement or out of the use or inability to use the Rev Models and Derivatives (including but not limited to damages for loss of data, loss of goodwill, loss of expected profit or savings, work stoppage, computer failure or malfunction, or any damage caused by malware or security breaches), even if Rev has been advised of the possibility of such damages. 
-5.2. Indemnification. You agree to indemnify and hold harmless Rev from and against any claims, damages, or losses arising out of or related to Your use or Distribution of the Rev Models, Derivatives and Output. 
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
 
-6. Warranty Disclaimer. Unless required by applicable law or agreed to in writing, Rev provides the Rev Models and Derivatives on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied, including, without limitation, any warranties or conditions of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. Rev does not represent nor warrant that the Rev Models, Derivatives or Output will be error-free, meet Your or any third party’s requirements, be secure or will allow You or any third party to achieve any kind of result or generate any kind of content. You are solely responsible for determining the appropriateness of using or Distributing the Rev Models, Derivatives and Output and assume any risks associated with Your exercise of rights under this Agreement. 
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
 
-7. Termination 
-7.1. Term. This Agreement is effective as of the date of your acceptance of this Agreement or access to the applicable Rev Models or Derivatives and will continue until terminated in accordance with the following terms. 
-7.2. Termination. Rev may terminate this Agreement at any time if You are in breach of this Agreement. Upon termination of this Agreement, You must cease to use all Rev Models and Derivatives and shall permanently delete any copy thereof. Sections 3, 4, 5, 6, 7 and 8 shall survive the termination of this Agreement. 
-7.3. Litigation. If You initiate any legal action or proceedings against Us or any other entity (including a cross-claim or counterclaim in a lawsuit), alleging that the Rev Model or a Derivative, or any part thereof, infringe upon intellectual property or other rights owned or licensable by You, then any licenses granted to You under this Agreement will immediately terminate as of the date such legal action or claim is filed or initiated. 
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
 
-8. General provisions 
-8.1. Governing Law. This Agreement will be governed by the laws of the State of Texas, without regard to choice of law principles, and the UN Convention on Contracts for the International Sale of Goods does not apply to this Agreement. 
-8.2. Forum. The United States District Court for the Western District of Texas and any appellate court therefrom shall have exclusive jurisdiction of any dispute arising out of this Agreement. 
-8.3. Severability. If any provision of this Agreement is held to be invalid, illegal or unenforceable, the remaining provisions shall be unaffected thereby and remain valid as if such provision had not been set forth herein. 
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
 
-9. Definitions 
-“Agreement” means this Rev Model Non-Production License agreement governing the access, use, and Distribution of the Rev Models, Derivatives and Output. 
-“Derivative” means any (a) modified version of the Rev Model (including but not limited to any customized or fine-tuned version thereof), (b) work based on the Rev Model, or (c) any other derivative work thereof. For the avoidance of doubt, Outputs are not considered as Derivatives under this Agreement. 
-“Distribution”, “Distributing”, “Distribute” or “Distributed” means providing or making available, by any means, a copy of the Rev Models and/or the Derivatives as the case may be, subject to Section 3 of this Agreement. 
-“Rev”, “We” or “Us” means Rev.com, Inc. 
-“Rev Model” means the AI model(s), and its elements which include algorithms, software, instructed checkpoints, parameters, source code (inference code, evaluation code and, if applicable, fine-tuning code) and any other elements associated thereto made available by Rev under this Agreement, including, if any, the technical documentation, manuals and instructions for the use and operation thereof. 
-“Non-Production Environment” means any setting, use case, or application of the Rev Models or Derivatives that expressly excludes live, real-world conditions, commercial operations, revenue-generating activities, or direct interactions with or impacts on end users (such as, for instance, Your employees or customers). Non-Production Environment may include, but is not limited to, any setting, use case, or application for research, development, testing, quality assurance, training, internal evaluation (other than any internal usage by employees in the context of the employer’s commercial business activities), and demonstration purposes by You. 
-“Outputs” mean any content generated by the operation of the Rev Models or the Derivatives from a prompt (i.e., audio files) provided by users. For the avoidance of doubt, Outputs do not include any components of a Rev Models, such as any fine-tuned versions of the Rev Models, the weights, or parameters. 
-“Personal” means any use of a Rev Model or a Derivative that is (a) solely for personal, non-profit and non-commercial purposes and (b) not directly or indirectly connected to any commercial activities, business operations, or employment responsibilities. For illustration purposes, Personal use of a Rev Model or a Derivative does not include any usage by individuals employed in companies in the context of their daily tasks, any activity that is intended to generate revenue, or that is performed on behalf of a commercial entity. 
-“You” means the individual or entity entering into this Agreement with Rev.
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "[]"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
