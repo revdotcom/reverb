@@ -6,106 +6,31 @@
 - [Benchmarking](#benchmarking)
 - [Acknowledgements](#acknowledgements)
 
-# Getting Started <a name="getting-started"></a>
->[!IMPORTANT]
->These instructions require that you set up:
-> * HuggingFace access token and have cli login.
->   * Click the following links for more information on [HuggingFace access tokens](https://huggingface.co/docs/hub/security-tokens#user-access-tokens) and setting up your [cli login](https://huggingface.co/docs/huggingface_hub/en/guides/cli#huggingface-cli-login).
-> * Git LFS
->   * Simply run `git lfs install` from your terminal.
-
-
-## Python Setup <a name="python-setup"></a>
-This codebase is compatible Python 3.10+. To get started, simply run
-```bash
-pip install .
-```
-This will install the `reverb` package into your python environment which is a modified version of the [wenet python package](https://github.com/wenet-e2e/wenet/tree/main?tab=readme-ov-file#install-python-package). In order to use `reverb`'s code, make sure you **do not** have another wenet installation in your environment which might cause conflict issues.
-
-> [!TIP]
-> While we suggest using our CLI or Python package to download the reverb model, you can also download it manually by running:
-> ```bash
-> git lfs install
-> git clone https://huggingface.co/Revai/reverb-asr
-> ```
-
-### Command Line Usage
-The following command can be used to transcribe audio files:
-```bash
-reverb --model reverb_asr_v1 --audio_file audio.mp3 --result_dir results
-```
-You can also specify how "verbatim" the transcription should be:
-```bash
-reverb --model reverb_asr_v1 --audio_file audio.mp3 --result_dir results --verbatimicity 0.2
-```
-Even change the decoding mode:
-```bash
-reverb --model reverb_asr_v1 --audio_file audio.mp3 --result_dir results --modes ctc_prefix_beam_search
-```
-For a full list of arguments, run:
-```bash
-reverb --help
-```
-or checkout our [script](wenet/bin/recognize_wav.py).
-
-### Python Usage
-Reverb can also be used from within Python:
-```python
-import wenet
-reverb = wenet.load_model("reverb_asr_v1")
-output = reverb.transcribe("audio.mp3")
-print(output)
-```
-The `load_model` function will automatically download the reverb model from HuggingFace.
-If instead you have a local version of the model that you downloaded from our HuggingFace or that you've finetuned, you can simply specify the path to the directory containing the `.pt` checkpoint, `config.yaml`, and extra files in `load_model` to use your model.
-```python
-import wenet
-reverb = wenet.load_model("/local/reverb-asr")
-output = reverb.transcribe("audio.mp3")
-print(output)
-```
-If instead of text output, you'd prefer CTM output, simply specify the format in the `transcribe` command.
-```python
-import wenet
-reverb = wenet.load_model("reverb_asr_v1")
-# Specifying the "format" will change the output
-output = reverb.transcribe("audio.mp3", format="ctm")
-print(output)
-```
-All arguments available to the `reverb` command line are also parameters that can be included in the `transcribe` command.
-```python
-import wenet
-reverb = wenet.load_model("reverb_asr_v1")
-# Specifying the "format" will change the output
-output = reverb.transcribe("audio.mp3", verbatimicity=0.5, beam_size=2, ctc_weight=0.6)
-print(output)
-```
-
 ## Docker Usage <a name="docker-usage"></a>
-From this directory (which is at `/workspace/asr` in the docker image):
+The `reverb` package is also installed within the docker image. You can run transcription using the `reverb` binary:
+```bash
+reverb --config $config \
+    --checkpoint $checkpoint \
+    --audio_file $audio \
+    --modes ctc_prefix_beam_search attention_rescoring \
+    --gpu 0 \
+    --verbatimicity 1.0 \
+    --result_dir output
 ```
-export PYTHONPATH="$(pwd)"/asr:$PYTHONPATH  # If you are not using docker and haven't already done so
-python wenet/bin/recognize_wav.py --config $config \
-    --checkpoint $model \
-    --audio $audio \
+where `$config` points to the `config.yaml` file and `$checkpoint` points to the `reverb_asr_v1.pt` file. Or alternatively, you can simply name the model using `--model` to run our checkpoint.
+```bash
+reverb --model reverb_asr_v1 \
+    --audio_file $audio \
     --modes ctc_prefix_beam_search attention_rescoring \
     --gpu 0 \
     --verbatimicity 1.0 \
     --result_dir output
 ```
 
-where `$config` points to the `config.yaml` file and `$model` points to the `reverb_asr_v1.pt` file.
-
 If you are using the docker image, these paths will be:
-```
-model="/workspace/reverb-asr/reverb_asr_v1.pt"
-config="/workspace/reverb-asr/config.yaml"
-```
-
-Or if you followed the python installation instructions, these files are under the `reverb-asr` directory in the root of the repository:
-```
-model="../reverb-asr/reverb_asr_v1.pt"
-config="../reverb-asr/config.yaml"
+```bash
+checkpoint="/root/.cache/reverb/reverb_asr_v1/reverb_asr_v1.pt"
+config="/root/.cache/reverb/reverb_asr_v1/config.yaml"
 ```
 
 In place of `$audio`, pass in the wav file you want to run ASR on.
@@ -129,7 +54,7 @@ Users can specify Reverb ASR's output style with the `verbatimicity` parameter. 
 
 ## Decoding Options <a name="decoding-options"></a>
 
-Reverb ASR uses the joint CTC/attention architecture described [here](https://arxiv.org/pdf/2102.01547) and [here](https://www.rev.com/blog/speech-to-text-technology/what-makes-revs-v2-best-in-class), and supports multiple modes of decoding. Users can specify one or more modes of decoding to `recognize_wav.py` and separate output directories will be created for each decoding mode.
+Reverb ASR uses the joint CTC/attention architecture described [here](https://arxiv.org/pdf/2102.01547) and [here](https://www.rev.com/blog/speech-to-text-technology/what-makes-revs-v2-best-in-class), and supports multiple modes of decoding. Users can specify one or more modes of decoding and separate output directories will be created for each decoding mode.
 
 Decoding options are:
 - `attention`
@@ -137,8 +62,6 @@ Decoding options are:
 - `ctc_prefix_beam_search`
 - `attention_rescoring`
 - `joint_decoding`
-
-
 
 # Benchmarking <a name="benchmarking"></a>
 

@@ -28,7 +28,7 @@ RUN git lfs install
 RUN git clone https://${HUGGINGFACE_ACCESS_TOKEN}:${HUGGINGFACE_ACCESS_TOKEN}@huggingface.co/Revai/reverb-asr /root/.cache/reverb/reverb_asr_v1
 
 
-RUN pip3 install /workspace/asr/
+RUN pip3 install /workspace/
 RUN pip3 install -r /workspace/diarization/requirements.txt
 
 ENV PYTHONPATH=/workspace/asr/:$PYTHONPATH
