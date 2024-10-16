@@ -25,7 +25,12 @@ from wenet.utils.init_tokenizer import init_tokenizer
 from wenet.utils.ctc_utils import get_blank_id
 from wenet.bin.ctc_align import ctc_align, adjust_model_time_offset
 
-
+_FRAME_DOWNSAMPLING_FACTOR = {
+    "linear": 1,
+    "conv2d": 4,
+    "conv2d6": 6,
+    "conv2d8": 8,
+}
 CACHED_MODELS_DIR = Path.home() / ".cache/reverb"
 _MODELS = {
     "reverb_asr_v1": "https://huggingface.co/Revai/reverb-asr",
@@ -36,7 +41,6 @@ class ReverbASR:
     def __init__(self,
         config,
         checkpoint,
-        *,
         cmvn_path: str | None = None,
         tokenizer_symbols: str | None = None,
         bpe_path: str | None = None,
@@ -81,10 +85,9 @@ class ReverbASR:
             self.model.encoder.global_cmvn = global_cmvn
         self.model = self.model.to(self.device)
         self.model.eval()
-
+        self.test_conf = self.configs['dataset_conf']
         self.input_frame_length = self.test_conf["fbank_conf"]["frame_shift"]
-        frame_downsampling_factor = {"linear": 1, "conv2d": 4, "conv2d6": 6, "conv2d8": 8}
-        self.output_frame_length = self.input_frame_length * frame_downsampling_factor.get(
+        self.output_frame_length = self.input_frame_length * _FRAME_DOWNSAMPLING_FACTOR.get(
             self.configs["encoder_conf"]["input_layer"], 4
         )
 
@@ -106,27 +109,6 @@ class ReverbASR:
             config_path = checkpoint_parent / config_path
 
         return config_path.as_posix()
-
-    @cached_property
-    def test_conf(self):
-        """Defines the test_conf used by the evaluation pipeline.
-        """
-        test_conf = copy.deepcopy(self.configs.get("dataset_conf", {}))
-        if not "filter_conf" in test_conf:
-            test_conf["filter_conf"] = {}
-
-        if "mfcc_conf" in test_conf:
-            test_conf["mfcc_conf"]["dither"] = 0.0
-        elif not "fbank_conf" in test_conf:
-            test_conf["fbank_conf"] = {
-                "num_mel_bins": 80,
-                "frame_shift": 10,
-                "frame_length": 25,
-            }
-        if "fbank_conf" in test_conf:
-            test_conf["fbank_conf"]["dither"] = 0.0
-
-        return test_conf
 
     def compute_feats(
         self,
@@ -220,7 +202,6 @@ class ReverbASR:
             num_mel_bins=self.test_conf["fbank_conf"]["num_mel_bins"],
             frame_length=self.test_conf["fbank_conf"]["frame_length"],
             frame_shift=self.test_conf["fbank_conf"]["frame_shift"],
-            dither=self.test_conf["fbank_conf"]["dither"],
         )
         feats = feats.to(self.device)
 
