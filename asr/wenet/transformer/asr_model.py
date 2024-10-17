@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # Modified from ESPnet(https://github.com/espnet/espnet)
-
+import logging
 from typing import List, Optional, Tuple, Dict, Any, Set
 
 import torch
@@ -25,7 +25,7 @@ try:
     from icefall.utils import get_texts
     from icefall.decode import get_lattice, Nbest, one_best_decoding
 except ImportError:
-    print('Failed to import k2 and icefall. \
+    logging.debug('Failed to import k2 and icefall. \
         Notice that they are necessary for hlg_onebest and hlg_rescore')
 
 from wenet.transformer.ctc import CTC
@@ -54,7 +54,7 @@ class ASRModel(torch.nn.Module):
     words: Dict[str, int]
     word_prefixes: Dict[str, int]
     tok_to_str: Dict[int, str]
-    pre_beam_ratio: float 
+    pre_beam_ratio: float
 
     def __init__(self,
                  vocab_size: int,
@@ -69,7 +69,7 @@ class ASRModel(torch.nn.Module):
                  special_tokens: Optional[dict] = None,
                  apply_non_blank_embedding: bool = False,
                  non_spike_loss_weight: float = 0.0,
-                 context_adaptor: Optional[ContextAdaptor] = None,  
+                 context_adaptor: Optional[ContextAdaptor] = None,
                  lexicon_path: Optional[str] = None,
                  token_path: Optional[str] = None):
         assert 0.0 <= ctc_weight <= 1.0, ctc_weight
@@ -151,7 +151,7 @@ class ASRModel(torch.nn.Module):
             cv_list_lengths = batch['cv_list_lengths'].to(device)
         else:
             cv_list = None
-            cv_list_lengths = None 
+            cv_list_lengths = None
 
         assert text_lengths.dim() == 1, text_lengths.shape
         # Check that batch_size is unified
@@ -165,7 +165,7 @@ class ASRModel(torch.nn.Module):
             encoder_out = encoder_out + self.context_adaptor(encoder_layers_out, encoded_cv)
         else:
             encoder_out, encoder_mask = self.encoder(speech, speech_lengths, cat_embs = cat_embs)
-            
+
         encoder_out_lens = encoder_mask.squeeze(1).sum(1)
 
         # 2a. CTC branch
@@ -381,7 +381,7 @@ class ASRModel(torch.nn.Module):
             decoding_chunk_size,
             num_decoding_left_chunks,
             simulate_streaming,
-            cat_embs=cat_embs, 
+            cat_embs=cat_embs,
             cv=cv,
             cv_lengths=cv_lengths)
         encoder_lens = encoder_mask.squeeze(1).sum(1)
@@ -985,7 +985,7 @@ class ASRModel(torch.nn.Module):
         cat_embs: Optional[torch.Tensor] = None,
         verbose: bool = False
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
-        
+
         # defaults copied from ONMT, except beam size
         # Alpha and Beta values for Google Length + Coverage penalty
         # Described here: https://arxiv.org/pdf/1609.08144.pdf, Section 7
@@ -1009,7 +1009,7 @@ class ASRModel(torch.nn.Module):
             ratio=0.0,
             ban_unk_token=False,
         )
-        
+
         batch_size = encoder_out.size(0)
         maxlen = encoder_out.size(1)
         encoder_dim = encoder_out.size(2)
@@ -1036,15 +1036,15 @@ class ASRModel(torch.nn.Module):
         )
 
         for step in range(decode_strategy.max_length):
-            decoder_input = decode_strategy.alive_seq 
+            decoder_input = decode_strategy.alive_seq
 
             hyps_mask = subsequent_mask(step+1).unsqueeze(0).repeat(
                 running_size, 1, 1)  # (B*N, i, i)
-            log_probs, cache, attns = self.decoder.forward_one_step_with_attn( 
+            log_probs, cache, attns = self.decoder.forward_one_step_with_attn(
                 encoder_out, encoder_mask, decoder_input, hyps_mask, cache, cat_embs=cat_embs)
             attn = torch.stack(attns, 0)
-            attn = attn.mean(0).mean(1) # mean over layers and attention heads 
-            
+            attn = attn.mean(0).mean(1) # mean over layers and attention heads
+
             decode_strategy.advance(log_probs, attn)
             any_finished = decode_strategy.is_finished.any()
             if any_finished:
@@ -1068,7 +1068,7 @@ class ASRModel(torch.nn.Module):
         hyps = decode_strategy.predictions
         scores = decode_strategy.scores
         # note: this version of attention decoding doesn't save token scores - we could add that later
-        return hyps[0][0].unsqueeze(0), scores[0][0].unsqueeze(0), scores[0][0].unsqueeze(0).unsqueeze(1) 
+        return hyps[0][0].unsqueeze(0), scores[0][0].unsqueeze(0), scores[0][0].unsqueeze(0).unsqueeze(1)
 
     def espnet_joint_decoding(
         self,
@@ -1094,7 +1094,7 @@ class ASRModel(torch.nn.Module):
         ctc_weight = 0.5
         length_bonus = 0.1
         pre_beam_ratio = 1. # default was 1.5 in ESPnet
-        ''' 
+        '''
 
         weights = dict(
             decoder=1.0 - self.joint_ctc_weight,
@@ -1103,7 +1103,7 @@ class ASRModel(torch.nn.Module):
         )
 
         beam_search = BeamSearchTimeSync(
-            sos=10000,            
+            sos=10000,
             beam_size=beam_size,
             ctc_probs=log_probs,
             decoder=decoder,
@@ -1129,7 +1129,7 @@ class ASRModel(torch.nn.Module):
 
         method = "espnet"
         assert method in ["onmt", "espnet"]
-        
+
         if method == "onmt":
             hyps, scores, token_scores = self.onmt_attention_decoding(encoder_out, beam_size, reverse_weight, cat_embs=cat_embs, verbose=verbose)
             start_times, end_times = (torch.tensor([0.]), torch.tensor([0.]))
