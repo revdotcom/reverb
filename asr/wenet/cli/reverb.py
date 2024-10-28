@@ -156,11 +156,11 @@ class ReverbASR:
                 # last batch can be smaller than batch size
                 last_batch_size = ceil(feats_batch.shape[1] / chunk_size)
                 last_batch_num_feats = chunk_size * last_batch_size
-                # Apply padding if needed
-                pad_amt = last_batch_num_feats - feats_batch.shape[1]
                 feats_lengths = torch.tensor(
                     [chunk_size] * last_batch_size, dtype=torch.int32
                 )
+                # Apply padding if needed
+                pad_amt = last_batch_num_feats - feats_batch.shape[1]
                 if pad_amt > 0:
                     feats_lengths[-1] -= pad_amt
                     feats_batch = F.pad(
