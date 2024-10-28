@@ -23,10 +23,10 @@ classifiers = [
 ]
 
 [tool.setuptools.package-dir]
-wenet = "wenet"
+wenet = "asr/wenet"
 
 [tool.setuptools.dynamic]
-dependencies = {file = ["requirements.txt"]}
+dependencies = {file = ["asr/requirements.txt"]}
 
 [project.scripts]
 reverb = "wenet.bin.recognize_wav:main"
