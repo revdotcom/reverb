@@ -16,7 +16,6 @@ class CharTokenizer(BaseTokenizer):
         connect_symbol: str = '',
         unk='<unk>',
     ) -> None:
-        logging.debug(f"JPR in char_tokenizer : {symbol_table=}, {non_lang_syms=}, {split_with_space=}, {connect_symbol=}, {unk=}   ")
         self.non_lang_syms_pattern = None
         if non_lang_syms is not None:
             self.non_lang_syms_pattern = re.compile(
