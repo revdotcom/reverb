@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "reverb"
+name = "rev-reverb"
 version = "0.1.0"
 dynamic = ["dependencies"]
 requires-python = ">=3.10"
@@ -18,7 +18,7 @@ readme = "README.md"
 license = {file = "LICENSE"}
 keywords = ["asr", "reverb", "rev", "diarization"]
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python :: 3.10"
 ]
 
