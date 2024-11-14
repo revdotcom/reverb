@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rev-reverb"
+version = "0.1.0"
+dynamic = ["dependencies"]
+requires-python = ">=3.10"
+authors = [
+  {name = "Rev Speechteam", email = "speechteam@rev.com"},
+]
+maintainers = [
+  {name = "Rev Speechteam", email = "speechteam@rev.com"},
+]
+description = "A simplified python packge to interact with the reverb models"
+readme = "README.md"
+license = {file = "LICENSE"}
+keywords = ["asr", "reverb", "rev", "diarization"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python :: 3.10"
+]
+
+[tool.setuptools.package-dir]
+wenet = "asr/wenet"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["asr/requirements.txt"]}
+
+[project.scripts]
+reverb = "wenet.bin.recognize_wav:main"
