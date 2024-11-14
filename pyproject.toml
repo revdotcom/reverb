@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rev-reverb"
-version = "0.1.0"
+version = "0.1.1"
 dynamic = ["dependencies"]
 requires-python = ">=3.10"
 authors = [
@@ -13,7 +13,7 @@ authors = [
 maintainers = [
   {name = "Rev Speechteam", email = "speechteam@rev.com"},
 ]
-description = "A simplified python packge to interact with the reverb models"
+description = "A simplified python package to interact with the reverb models."
 readme = "README.md"
 license = {file = "LICENSE"}
 keywords = ["asr", "reverb", "rev", "diarization"]
@@ -21,6 +21,10 @@ classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python :: 3.10"
 ]
+
+[project.urls] 
+Huggingface = "https://huggingface.co/Revai"
+GitHub = "https://github.com/revdotcom/reverb/tree/main"
 
 [tool.setuptools.package-dir]
 wenet = "asr/wenet"
