@@ -46,7 +46,12 @@ This codebase is compatible Python 3.10+. To get started, simply run
 ```bash
 pip install .
 ```
-This will install the `reverb` package into your python environment which is a modified version of the [wenet python package](https://github.com/wenet-e2e/wenet/tree/main?tab=readme-ov-file#install-python-package). In order to use `reverb`'s code, make sure you **do not** have another wenet installation in your environment which might cause conflict issues.
+Alternatively, install the latest package on pypi.
+```bash
+pip install rev-reverb
+```
+
+This will install the reverb package into your python environment which is a modified version of the [wenet python package](https://github.com/wenet-e2e/wenet/tree/main?tab=readme-ov-file#install-python-package). In order to use reverb's code, make sure you **do not** have another wenet installation in your environment which might cause conflict issues.
 
 > [!TIP]
 > While we suggest using our CLI or Python package to download the reverb model, you can also download it manually by running:
@@ -98,7 +103,7 @@ reverb = wenet.load_model("reverb_asr_v1")
 output = reverb.transcribe("audio.mp3", format="ctm")
 print(output)
 ```
-All arguments available to the `reverb` command line are also parameters that can be included in the `transcribe` command.
+All arguments available to the reverb command line are also parameters that can be included in the `transcribe` command.
 ```python
 import wenet
 reverb = wenet.load_model("reverb_asr_v1")
