@@ -21,8 +21,10 @@ classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python :: 3.10"
 ]
-Project-URL: Homepage, https://huggingface.co/Revai
-Project-URL: GitHub, https://github.com/revdotcom/reverb/tree/main
+
+[project.urls] 
+Huggingface = "https://huggingface.co/Revai"
+GitHub = "https://github.com/revdotcom/reverb/tree/main"
 
 [tool.setuptools.package-dir]
 wenet = "asr/wenet"
