@@ -1,7 +1,3 @@
-#FROM pytorch/pytorch:2.4.0-cuda12.4-cudnn9-runtime
-#FROM  --platform=linux/arm64 nvcr.io/nvidia/clara-holoscan/holoscan:v2.7.0-dgpu
-
-
 # Use an ARM64 base image
 FROM --platform=linux/arm64 python:3.11-slim
 
@@ -19,6 +15,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         git \
         git-lfs \
+        libsndfile1-dev \
         locales && \
     rm -rf /var/lib/apt/lists/*
 
@@ -47,4 +44,4 @@ RUN pip3 install -r /workspace/diarization/requirements.txt
 ENV PYTHONPATH=/workspace/asr/:$PYTHONPATH
 
 RUN reverb --help
-#RUN python3 /workspace/diarization/infer_pyannote3.0.py --help
+RUN python3 /workspace/diarization/infer_pyannote3.0.py --help
