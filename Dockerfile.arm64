@@ -33,8 +33,7 @@ WORKDIR /workspace
 COPY . /workspace/
 
 ARG HUGGINGFACE_ACCESS_TOKEN
-ENV HUGGINGFACE_ACCESS_TOKEN=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
-#ENV HUGGINGFACE_ACCESS_TOKEN=${HUGGINGFACE_ACCESS_TOKEN}
+ENV HUGGINGFACE_ACCESS_TOKEN=${HUGGINGFACE_ACCESS_TOKEN}
 
 # manually download ASR model
 # diarization will be download automatically when running the script due to HF integration
