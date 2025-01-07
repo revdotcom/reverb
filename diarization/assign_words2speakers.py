@@ -80,8 +80,6 @@ if __name__ == '__main__':
     hypothesis_spkr_tree = IntervalTree(Interval(segment.start, segment.end, label)
                                         for segment, _, label in rttm.itertracks(yield_label=True))
 
-    # file_id, '1', str(row._data['speaker']), f'{ts:.2f}', f'{(ts + duration):.2f}', token
-
     with open(args.output_stm_transcription, 'w') as f:
         for _, channel, start, dur, token, _ in ctm:
             start, dur = float(start), float(dur)
