@@ -10,7 +10,6 @@ import csv
 from collections import defaultdict
 
 from intervaltree import IntervalTree, Interval
-from pyannote.core import Annotation
 
 from pyannote.database.util import load_rttm
 
@@ -66,14 +65,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser('Assign words to speakers based on a diarization rttm file and ctm transcription')
     parser.add_argument('diarization_rttm', help='diarization rttm file')
     parser.add_argument('ctm_transcription', help='ctm transcription file')
-
-    """ We had to hack rttm format a little bit so it can store both information from ctm file (token and 
-        token confidence). This is not implemented in pyannote, so we wrote it ourselves.
-        For rttm description see https://github.com/nryant/dscore?tab=readme-ov-file#rttm
-        We are using `Orthography Field` for token and `Confidence Score` for token confidence.
-        Trying to read this rttm format in pyannote might yield unexpected results or even errors.
-    """
-    parser.add_argument('output', help='output file in rttm format as described above')
+    """ Read more about stm format here (we can't store speaker identities in ctm) """
+    """ https://www.nist.gov/system/files/documents/2021/08/31/OpenASR21_EvalPlan_v1_3_1.pdf """
+    parser.add_argument('output_stm_transcription', help='output file in .stm format as described above')
 
     args = parser.parse_args()
 
@@ -86,8 +80,10 @@ if __name__ == '__main__':
     hypothesis_spkr_tree = IntervalTree(Interval(segment.start, segment.end, label)
                                         for segment, _, label in rttm.itertracks(yield_label=True))
 
-    with open(args.output, 'w') as f:
-        for utt_id, channel, start, dur, token, confidence in ctm:
-            start, dur, confidence = float(start), float(dur), float(confidence)
+    # file_id, '1', str(row._data['speaker']), f'{ts:.2f}', f'{(ts + duration):.2f}', token
+
+    with open(args.output_stm_transcription, 'w') as f:
+        for _, channel, start, dur, token, _ in ctm:
+            start, dur = float(start), float(dur)
             hyp_speaker = speaker_for_segment(float(start), float(dur), hypothesis_spkr_tree)
-            f.write(f"SPEAKER {dict_key[0]} 1 {start:.3f} {dur:.3f} {token} <NA> {hyp_speaker} {confidence:.2f} <NA>\n")
+            f.write(f'{dict_key[0]} 1 {hyp_speaker} {start:.3f} {(start + dur):.3f} {token}\n')
