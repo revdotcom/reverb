@@ -51,12 +51,9 @@ It is possible to assign words to speakers if ASR was previously run.
 The script `assign_words2speaker.py` takes a diarization segmentation and ASR transcription in
 CTM format to output speaker assignment to tokens (words). 
 ```bash
-python assign_words2speaker.py speaker_segments.rttm words.ctm transcript.rttm
+python assign_words2speaker.py speaker_segments.rttm words.ctm transcript.stm
 ```
-The output format used is a slightly modified RTTM. Besides speaker value, start and duration, we 
-store token value and token confidence in the RTTM itself.
-We used `Orthography Field` (6th column) to store token value and `Confidence Score` (9th column) 
-to store token confidence.
+Read more about stm format [here](https://www.nist.gov/system/files/documents/2021/08/31/OpenASR21_EvalPlan_v1_3_1.pdf) (we can't store speaker identities in ctm).
 
 ### Running training script
 We do provide the training script that was used to fine-tune original pyannote3.0 model.
