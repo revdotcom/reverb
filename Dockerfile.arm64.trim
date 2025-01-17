@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean
 
 # Install PyTorch
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu && rm -rf /root/.cache/pip/
 
 ENV PYTHONUNBUFFERED=1
 
@@ -37,7 +37,8 @@ ENV HUGGINGFACE_ACCESS_TOKEN=${HUGGINGFACE_ACCESS_TOKEN}
 # diarization will be download automatically when running the script due to HF integration
 RUN git lfs install &&  \
     git clone https://${HUGGINGFACE_ACCESS_TOKEN}:${HUGGINGFACE_ACCESS_TOKEN}@huggingface.co/Revai/reverb-asr /root/.cache/reverb/reverb_asr_v1 && \
-    rm -rf /root/.cache/reverb/reverb_asr_v1/.git /root/.cache/pip/ /root/.cache/reverb/reverb_asr_v1/reverb_asr_v1.jit.zip
+    rm -rf /root/.cache/reverb/reverb_asr_v1/.git /root/.cache/pip/ /root/.cache/reverb/reverb_asr_v1/reverb_asr_v1.jit.zip && \
+    python3 strip-checkpoint-inplace.py  /root/.cache/reverb/reverb_asr_v1/reverb_asr_v1.pt
 
 RUN pip3 install /workspace/ && rm -rf /root/.cache/pip/
 # For a pure ASR image, these aren't needed
