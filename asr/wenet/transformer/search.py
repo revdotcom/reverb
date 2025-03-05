@@ -423,9 +423,9 @@ def attention_rescoring(
     for b in range(batch_size):
         beam_size = beam_sizes[b]
         encoder_out = encoder_outs[b, :encoder_lens[b], :].unsqueeze(0)
-        encoder_outs_expanded.append(encoder_out.repeat(beam_size, 1, 1))
+        encoder_outs_expanded.append(encoder_out.expand(beam_size, -1, -1))
         encoder_out_lens.extend([encoder_lens[b]] * beam_size)
-    
+
     encoder_outs_expanded = torch.cat(encoder_outs_expanded, dim=0)
     
     # Forward decoder with all hypotheses at once

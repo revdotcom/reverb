@@ -874,15 +874,7 @@ class ASRModel(torch.nn.Module):
         cat_embs: Optional[torch.Tensor] = None,
         verbose: bool = False
     ) -> Tuple[Optional[torch.Tensor], Optional[torch.Tensor]]:
-        batch_size = encoder_out.size(0)
-        beam_size = hyps.size(0) // batch_size
-        assert hyps.size(0) == batch_size * beam_size, "Number of hypotheses must be batch_size * beam_size"
-        assert hyps_lens.size(0) == batch_size * beam_size
-        
-        # Repeat encoder output for each hypothesis in the beam, maintaining batch separation
-        encoder_out = encoder_out.unsqueeze(1).repeat(1, beam_size, 1, 1)
-        encoder_out = encoder_out.view(batch_size * beam_size, -1, encoder_out.size(-1))
-        encoder_mask = torch.ones(batch_size * beam_size,
+        encoder_mask = torch.ones(encoder_out.size(0),
                                 1,
                                 encoder_out.size(1),
                                 dtype=torch.bool,
