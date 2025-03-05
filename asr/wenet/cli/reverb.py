@@ -231,14 +231,23 @@ class ReverbASR:
                     infos={"tasks": ["transcribe"], "langs": ["en"]},
                     cat_embs=cat_embs,
                 )
+                print(get_output(
+                    "txt",
+                    self.tokenizer,
+                    Path(audio_file).stem,
+                    hyps["attention_rescoring"],
+                    timings_adjustment,
+                    chunk_size,
+                    self.input_frame_length,
+                    self.output_frame_length,
+                ))
                 results.append(hyps)
-
         outputs = []
         for mode in modes:
             outputs.append(get_output(
                 format,
                 self.tokenizer,
-                Path(audio_file).name,
+                Path(audio_file).stem,
                 list(chain(*(hyp[mode] for hyp in results))),
                 timings_adjustment,
                 chunk_size,

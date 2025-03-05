@@ -378,73 +378,113 @@ def attention_rescoring(
     device = encoder_outs.device
     assert encoder_outs.shape[0] == len(ctc_prefix_results)
     batch_size = encoder_outs.shape[0]
-    results = []
+    
+    # Collect all hypotheses and their lengths
+    all_hyps = []
+    all_ctc_scores = []
+    beam_sizes = []
     for b in range(batch_size):
+        all_hyps.extend(ctc_prefix_results[b].nbest)
+        all_ctc_scores.extend(ctc_prefix_results[b].nbest_scores)
+        beam_sizes.append(len(ctc_prefix_results[b].nbest))
+    
+    # Pad all hypotheses together
+    hyps_pad = pad_sequence([torch.tensor(hyp, device=device, dtype=torch.long) 
+                            for hyp in all_hyps], True, model.ignore_id)
+    hyps_lens = torch.tensor([len(hyp) for hyp in all_hyps],
+                            device=device, dtype=torch.long)
+
+    # Handle special tokens if needed
+    if getattr(model, 'special_tokens', None) is not None \
+            and "transcribe" in model.special_tokens:
+        prev_len = hyps_pad.size(1)
+        # Repeat tasks and langs for each beam
+        tasks = [infos["tasks"][b] for b in range(batch_size) for _ in range(beam_sizes[b])]
+        langs = [infos["langs"][b] for b in range(batch_size) for _ in range(beam_sizes[b])]
+        hyps_pad, _ = add_whisper_tokens(
+            model.special_tokens,
+            hyps_pad,
+            model.ignore_id,
+            tasks=tasks,
+            no_timestamp=True,
+            langs=langs,
+            use_prev=False)
+        cur_len = hyps_pad.size(1)
+        hyps_lens = hyps_lens + cur_len - prev_len
+        prefix_len = 4
+    else:
+        hyps_pad, _ = add_sos_eos(hyps_pad, sos, eos, model.ignore_id)
+        hyps_lens = hyps_lens + 1  # Add <sos> at beginning
+        prefix_len = 1
+
+    # Repeat encoder outputs for each beam
+    encoder_out_lens = []
+    encoder_outs_expanded = []
+    for b in range(batch_size):
+        beam_size = beam_sizes[b]
         encoder_out = encoder_outs[b, :encoder_lens[b], :].unsqueeze(0)
+        encoder_outs_expanded.append(encoder_out.repeat(beam_size, 1, 1))
+        encoder_out_lens.extend([encoder_lens[b]] * beam_size)
+    
+    encoder_outs_expanded = torch.cat(encoder_outs_expanded, dim=0)
+    
+    # Forward decoder with all hypotheses at once
+    decoder_out, r_decoder_out = model.forward_attention_decoder(
+        hyps_pad, hyps_lens, encoder_outs_expanded, reverse_weight, cat_embs)
+
+    # Process results batch by batch
+    results = []
+    offset = 0
+    for b in range(batch_size):
+        beam_size = beam_sizes[b]
         hyps = ctc_prefix_results[b].nbest
-        ctc_scores = ctc_prefix_results[b].nbest_scores
-        hyps_pad = pad_sequence([
-            torch.tensor(hyp, device=device, dtype=torch.long) for hyp in hyps
-        ], True, model.ignore_id)  # (beam_size, max_hyps_len)
-        hyps_lens = torch.tensor([len(hyp) for hyp in hyps],
-                                 device=device,
-                                 dtype=torch.long)  # (beam_size,)
-        if getattr(model, 'special_tokens', None) is not None \
-                and "transcribe" in model.special_tokens:
-            prev_len = hyps_pad.size(1)
-            hyps_pad, _ = add_whisper_tokens(
-                model.special_tokens,
-                hyps_pad,
-                model.ignore_id,
-                tasks=[infos["tasks"][b]] * len(hyps),
-                no_timestamp=True,
-                langs=[infos["langs"][b]] * len(hyps),
-                use_prev=False)
-            cur_len = hyps_pad.size(1)
-            hyps_lens = hyps_lens + cur_len - prev_len
-            prefix_len = 4
-        else:
-            hyps_pad, _ = add_sos_eos(hyps_pad, sos, eos, model.ignore_id)
-            hyps_lens = hyps_lens + 1  # Add <sos> at begining
-            prefix_len = 1
-        decoder_out, r_decoder_out = model.forward_attention_decoder(
-            hyps_pad, hyps_lens, encoder_out, reverse_weight, cat_embs)
-        # Only use decoder score for rescoring
         best_score = -float('inf')
         best_index = 0
         confidences = []
         tokens_confidences = []
-        for i, hyp in enumerate(hyps):
+        
+        # Process each hypothesis in the current batch
+        for i in range(beam_size):
+            idx = offset + i
+            hyp = hyps[i]
             score = 0.0
             tc = []  # tokens confidences
+            
+            # Calculate forward decoder score
             for j, w in enumerate(hyp):
-                s = decoder_out[i][j + (prefix_len - 1)][w]
+                s = decoder_out[idx][j + (prefix_len - 1)][w]
                 score += s
                 tc.append(math.exp(s))
-            score += decoder_out[i][len(hyp) + (prefix_len - 1)][eos]
-            # add right to left decoder score
+            score += decoder_out[idx][len(hyp) + (prefix_len - 1)][eos]
+            
+            # Add right to left decoder score if needed
             if reverse_weight > 0 and r_decoder_out.dim() > 0:
                 r_score = 0.0
                 for j, w in enumerate(hyp):
-                    s = r_decoder_out[i][len(hyp) - j - 1 +
-                                         (prefix_len - 1)][w]
+                    s = r_decoder_out[idx][len(hyp) - j - 1 + (prefix_len - 1)][w]
                     r_score += s
                     tc[j] = (tc[j] + math.exp(s)) / 2
-                r_score += r_decoder_out[i][len(hyp) + (prefix_len - 1)][eos]
+                r_score += r_decoder_out[idx][len(hyp) + (prefix_len - 1)][eos]
                 score = score * (1 - reverse_weight) + r_score * reverse_weight
+            
             confidences.append(math.exp(score / (len(hyp) + 1)))
-            # add ctc score
-            score += ctc_scores[i] * ctc_weight
+            score += all_ctc_scores[idx] * ctc_weight
+            
             if score > best_score:
                 best_score = score
                 best_index = i
             tokens_confidences.append(tc)
+        
+        # Add best result for current batch
         results.append(
             DecodeResult(hyps[best_index],
-                         best_score,
-                         confidence=confidences[best_index],
-                         times=ctc_prefix_results[b].nbest_times[best_index],
-                         tokens_confidence=tokens_confidences[best_index]))
+                        best_score,
+                        confidence=confidences[best_index],
+                        times=ctc_prefix_results[b].nbest_times[best_index],
+                        tokens_confidence=tokens_confidences[best_index]))
+        
+        offset += beam_size
+    
     return results
 
 def joint_decoding(
