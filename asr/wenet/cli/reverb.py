@@ -237,7 +237,7 @@ class ReverbASR:
             outputs.append(get_output(
                 format,
                 self.tokenizer,
-                Path(audio_file).stem,
+                Path(audio_file).name,
                 list(chain(*(hyp[mode] for hyp in results))),
                 timings_adjustment,
                 chunk_size,
