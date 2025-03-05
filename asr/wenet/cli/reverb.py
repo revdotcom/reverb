@@ -232,6 +232,7 @@ class ReverbASR:
                     cat_embs=cat_embs,
                 )
                 results.append(hyps)
+
         outputs = []
         for mode in modes:
             outputs.append(get_output(
