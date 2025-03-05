@@ -389,8 +389,10 @@ def attention_rescoring(
         beam_sizes.append(len(ctc_prefix_results[b].nbest))
     
     # Pad all hypotheses together
+    # hyps_pad: (batch*beam, max_hyps_len)
     hyps_pad = pad_sequence([torch.tensor(hyp, device=device, dtype=torch.long) 
                             for hyp in all_hyps], True, model.ignore_id)
+    # hyps_lens: (batch*beam)
     hyps_lens = torch.tensor([len(hyp) for hyp in all_hyps],
                             device=device, dtype=torch.long)
 
@@ -422,13 +424,22 @@ def attention_rescoring(
     encoder_outs_expanded = []
     for b in range(batch_size):
         beam_size = beam_sizes[b]
+        # encoder_out: (1, max_len, encoder_dim)
         encoder_out = encoder_outs[b, :encoder_lens[b], :].unsqueeze(0)
+        # encoder_outs_expanded: (beam_size, max_len, encoder_dim)
         encoder_outs_expanded.append(encoder_out.expand(beam_size, -1, -1))
+        # encoder_out_lens: (beam_size)
         encoder_out_lens.extend([encoder_lens[b]] * beam_size)
 
+    # encoder_outs_expanded: (batch*beam, max_len, encoder_dim)
     encoder_outs_expanded = torch.cat(encoder_outs_expanded, dim=0)
     
     # Forward decoder with all hypotheses at once
+    #  MDR: forward_attention_decoder will rexpand the encoder_outs_expanded
+    #       to (batch*beam, max_len, encoder_dim). Necessary to maintain C++
+    #       compatibility.
+    # decoder_out: (batch*beam, max_hyps_len, vocab_size)
+    # r_decoder_out: (batch*beam, max_hyps_len, vocab_size)
     decoder_out, r_decoder_out = model.forward_attention_decoder(
         hyps_pad, hyps_lens, encoder_outs_expanded, reverse_weight, cat_embs)
 

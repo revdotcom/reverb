@@ -874,6 +874,36 @@ class ASRModel(torch.nn.Module):
         cat_embs: Optional[torch.Tensor] = None,
         verbose: bool = False
     ) -> Tuple[Optional[torch.Tensor], Optional[torch.Tensor]]:
+        """ Export interface for c++ call, forward decoder with multiple
+            hypothesis from ctc prefix beam search and one encoder output
+        Args:
+            hyps (torch.Tensor): hyps from ctc prefix beam search, already
+                pad sos at the begining
+                (batch*beam, max_hyps_len)
+            hyps_lens (torch.Tensor): length of each hyp in hyps
+                (batch*beam)
+            encoder_out (torch.Tensor): corresponding encoder output
+            r_hyps (torch.Tensor): hyps from ctc prefix beam search, already
+                pad eos at the begining which is used fo right to left decoder
+            reverse_weight: used for verfing whether used right to left decoder,
+                > 0 will use.
+            cat_embs (torch.Tensor): category embeddings
+                (1, cat_emb_dim)
+        Returns:
+            decoder_out (torch.Tensor): decoder output
+                (batch*beam, max_hyps_len, vocab_size)
+            r_decoder_out (torch.Tensor): decoder output for right to left decoder
+                (batch*beam, max_hyps_len, vocab_size)
+        """
+        
+        batch_size = encoder_out.size(0)
+        beam_size = hyps.size(0) // batch_size
+        assert hyps.size(0) == batch_size * beam_size, "Number of hypotheses must be batch_size * beam_size"
+        assert hyps_lens.size(0) == batch_size * beam_size
+        
+        # Repeat encoder output for each hypothesis in the beam, maintaining batch separation
+        encoder_out = encoder_out.unsqueeze(1).expand(-1, beam_size, -1, -1)
+        encoder_out = encoder_out.view(batch_size * beam_size, -1, encoder_out.size(-1))
         encoder_mask = torch.ones(encoder_out.size(0),
                                 1,
                                 encoder_out.size(1),
