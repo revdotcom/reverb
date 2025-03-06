@@ -121,12 +121,11 @@ class ReverbASR:
     ) -> torch.Tensor:
         waveform, sample_rate = torchaudio.load(audio_file, normalize=False)
         logging.info(f"detected sample rate: {sample_rate}")
-        waveform = waveform.to(torch.float)
+        waveform = waveform.to(torch.float).to(self.device)
         if sample_rate != resample_rate:
             waveform = torchaudio.transforms.Resample(
                 orig_freq=sample_rate, new_freq=resample_rate
-            )(waveform)
-        waveform = waveform.to(self.device)
+            ).to(self.device)(waveform)
         feats = kaldi.fbank(
             waveform,
             num_mel_bins=num_mel_bins,
@@ -151,14 +150,12 @@ class ReverbASR:
             feats_batch = infeats[
                 :, b * batch_num_feats : b * batch_num_feats + batch_num_feats, :
             ]
-            feats_lengths = torch.tensor([chunk_size] * batch_size, dtype=torch.int32)
+            feats_lengths = torch.tensor([chunk_size] * batch_size, dtype=torch.int32, device=self.device)
             if b == num_batches - 1:
                 # last batch can be smaller than batch size
                 last_batch_size = ceil(feats_batch.shape[1] / chunk_size)
                 last_batch_num_feats = chunk_size * last_batch_size
-                feats_lengths = torch.tensor(
-                    [chunk_size] * last_batch_size, dtype=torch.int32
-                )
+                feats_lengths = torch.tensor([chunk_size] * last_batch_size, dtype=torch.int32, device=self.device)
                 # Apply padding if needed
                 pad_amt = last_batch_num_feats - feats_batch.shape[1]
                 if pad_amt > 0:
@@ -172,7 +169,7 @@ class ReverbASR:
                     )
             yield feats_batch.reshape(
                 -1, chunk_size, self.test_conf["fbank_conf"]["num_mel_bins"]
-            ), feats_lengths.to(self.device)
+            ), feats_lengths
 
     def transcribe_modes(
         self,
