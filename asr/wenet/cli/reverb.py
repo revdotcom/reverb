@@ -323,7 +323,8 @@ def get_output(
 
 
 def load_model(
-    model: str
+    model: str,
+    gpu: int = -1,
 ):
     """Loads a reverb model. If "model" points to a path that exists,
     tries to load a model using those files at "model".
@@ -354,7 +355,8 @@ def load_model(
     logging.info(f"Loading the model with {config_path = } and {checkpoint_path = }")
     return ReverbASR(
         str(config_path),
-        str(checkpoint_path)
+        str(checkpoint_path),
+        gpu = gpu,
     )
 
 
