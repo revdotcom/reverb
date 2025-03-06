@@ -162,7 +162,7 @@ def main():
         raise RuntimeError("One of either --model or (--checkpoint and --config) must be set.")
 
     if model_arg_set:
-        reverb_model = load_model(args.model)
+        reverb_model = load_model(args.model, args.gpu)
     else:
         reverb_model = ReverbASR(
             args.config,
