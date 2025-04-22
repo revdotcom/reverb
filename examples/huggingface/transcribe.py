@@ -1,5 +1,11 @@
+import sys
+import os
+
+# Add the project root directory to Python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../asr/"))
+sys.path.append(project_root)
+
 import numpy as np
-from pyctcdecode import build_ctcdecoder
 import torch
 import torchaudio
 from transformers import pipeline
@@ -9,33 +15,36 @@ from reverb_config import ReverbConfig
 from reverb_processor import ReverbFeatureExtractor, ReverbTokenizer
 
 
+# Register the custom model and config
 AutoConfig.register("reverb_asr", ReverbConfig)
 AutoModelForSpeechSeq2Seq.register(ReverbConfig, ReverbModel)
-feature_extractor = ReverbFeatureExtractor(return_tensors='pt')
-tokenizer = ReverbTokenizer(
-    "hf-reverb/tk.model",
-)
-decoder_ids = []
-with open("hf-reverb/tk.units.txt", 'r') as units_file:
-    for line in units_file:
-        token = line.split()[0]
-        if len(token) == 0:
-            continue
-        if token == '<blank>':
-            token = ''
-        decoder_ids.append(token)
-decoder = build_ctcdecoder(decoder_ids)
 
+# Load configuration
+config = ReverbConfig.from_yaml_file("reverb_config.yaml")
+
+# Initialize feature extractor and tokenizer using config
+feature_extractor = ReverbFeatureExtractor(return_tensors='pt')
+tokenizer = ReverbTokenizer(config.tokenizer_path)
+
+# Initialize model
+model = ReverbModel(config)
+
+# Initialize transcription pipeline
 transcribe = pipeline(
     "automatic-speech-recognition",
-    model="hf-reverb",
+    model=model,
     feature_extractor=feature_extractor,
     tokenizer=tokenizer,
     framework='pt',
     device='cpu', #crucial
-    decoder=decoder,
-    decoder_kwargs={"beam_width": 8, "token_min_logp": -10}
+    decoder=config.decoder,
+    decoder_kwargs={
+        "beam_width": config.decoder_beam_width,
+        "token_min_logp": config.decoder_token_min_logp
+    }
 )
+
+# Process audio
 AUDIO_PATH = ""
 waveform, sample_rate = torchaudio.load(AUDIO_PATH, normalize=False)
 #print(waveform)
